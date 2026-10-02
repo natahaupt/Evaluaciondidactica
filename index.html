@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Evaluación Didáctica - CEPIES UMSA</title>
   
-  <!-- Tipografías elegantes y amigables -->
+  <!-- Tipografías formales y legibles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
   <style>
     :root {
       --bg-page: #fdf2f4;
-      --card-bg: rgba(255, 255, 255, 0.94);
+      --card-bg: rgba(255, 255, 255, 0.95);
       --primary-rose: #d84b7a;
       --primary-dark: #b12b58;
       --accent-gold: #c59b27;
@@ -46,62 +46,55 @@
       overflow-x: hidden;
     }
 
-    /* Columnas laterales decorativas con el logo de CEPIES */
-    .side-strip {
+    /* ========================================================
+       MARCAS DE AGUA GIGANTES A LOS COSTADOS
+       ======================================================== */
+    .watermark-side {
       position: fixed;
-      top: 0;
-      bottom: 0;
-      width: 110px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      padding: 20px 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(280px, 24vw, 420px);
+      height: clamp(280px, 24vw, 420px);
       pointer-events: none;
       z-index: 1;
-      opacity: 0.85;
+      opacity: 0.18; /* Efecto marca de agua suave */
+      filter: saturate(1.1);
+      user-select: none;
     }
 
-    .side-left { left: 15px; }
-    .side-right { right: 15px; }
-
-    .side-logo-item {
-      width: 75px;
-      height: 75px;
-      border-radius: 50%;
-      background: #ffffff;
-      padding: 4px;
-      box-shadow: 0 4px 15px rgba(216, 75, 122, 0.2);
-      border: 2px solid var(--accent-gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      animation: floatBadge 6s ease-in-out infinite alternate;
+    .watermark-left {
+      left: -40px;
     }
 
-    .side-logo-item img {
+    .watermark-right {
+      right: -40px;
+    }
+
+    .watermark-side img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       border-radius: 50%;
     }
 
-    @keyframes floatBadge {
-      0% { transform: translateY(0px) rotate(0deg); }
-      100% { transform: translateY(-10px) rotate(3deg); }
+    /* En pantallas móviles se atenúa un poco más para que no distraiga */
+    @media (max-width: 768px) {
+      .watermark-side {
+        width: 220px;
+        height: 220px;
+        opacity: 0.10;
+      }
+      .watermark-left { left: -70px; }
+      .watermark-right { right: -70px; }
     }
 
-    @media (max-width: 900px) {
-      .side-strip { display: none; }
-    }
-
-    /* Contenedor central */
+    /* Contenedor central de la app */
     .main-wrapper {
       width: 100%;
       max-width: 720px;
       padding: 30px 16px 60px;
-      z-index: 2;
+      position: relative;
+      z-index: 2; /* Sobre las marcas de agua */
     }
 
     /* Botón flotante para la administradora */
@@ -109,7 +102,7 @@
       position: fixed;
       bottom: 15px;
       right: 15px;
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(8px);
       border: 1px solid var(--border-soft);
       padding: 8px 14px;
@@ -131,7 +124,7 @@
     .card {
       background: var(--card-bg);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       border-radius: 24px;
       box-shadow: var(--shadow-soft);
       padding: 32px 28px;
@@ -154,12 +147,13 @@
     }
 
     .header-logo-img {
-      width: 70px;
-      height: 70px;
+      width: 75px;
+      height: 75px;
       border-radius: 50%;
       box-shadow: 0 4px 12px rgba(216, 75, 122, 0.2);
       border: 2px solid var(--accent-gold);
       background: #fff;
+      object-fit: contain;
     }
 
     .institution-pill {
@@ -190,7 +184,7 @@
       line-height: 1.5;
       margin-top: 6px;
       padding: 8px 12px;
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.7);
       border-radius: 10px;
       border-left: 3px solid var(--primary-rose);
       text-align: left;
@@ -245,7 +239,7 @@
       box-shadow: 0 12px 24px rgba(216, 75, 122, 0.4);
     }
 
-    /* Pantalla 2: Interfaz de Juego con Dado 3D */
+    /* Pantalla 2: Interfaz con Dado 3D */
     .status-bar {
       display: flex;
       justify-content: space-between;
@@ -258,7 +252,6 @@
       color: var(--primary-dark);
     }
 
-    /* Temporizador */
     .timer-wrap {
       display: flex;
       align-items: center;
@@ -297,7 +290,7 @@
       transition: width 0.3s;
     }
 
-    /* Escenario del Dado 3D */
+    /* Escenario Dado 3D */
     .dice-stage {
       height: 120px;
       display: flex;
@@ -327,7 +320,6 @@
       padding: 7px;
     }
 
-    /* Puntos del dado (pips) */
     .pip {
       width: 10px;
       height: 10px;
@@ -391,7 +383,6 @@
       line-height: 1.45;
     }
 
-    /* Botones Verdadero y Falso */
     .vf-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -426,7 +417,6 @@
       transform: none !important;
     }
 
-    /* Retroalimentación inmediata */
     .feedback-panel {
       margin-top: 18px;
       padding: 14px;
@@ -451,7 +441,6 @@
       color: #991b1b;
     }
 
-    /* Botón claro para avanzar */
     .next-step-btn {
       width: 100%;
       background: linear-gradient(135deg, var(--accent-gold) 0%, #b8860b 100%);
@@ -473,7 +462,7 @@
       100% { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(197, 155, 39, 0.5); }
     }
 
-    /* Pantalla de Reporte / Comprobante Oficial */
+    /* Certificado / Comprobante Oficial */
     .certificate-card {
       background: #ffffff;
       border: 3px double var(--accent-gold);
@@ -492,6 +481,7 @@
       margin: 0 auto 10px;
       display: block;
       border: 2px solid var(--accent-gold);
+      object-fit: contain;
     }
 
     .cert-title {
@@ -557,17 +547,10 @@
       gap: 12px;
     }
 
-    .btn-download {
-      background: var(--primary-rose);
-      color: white;
-    }
+    .btn-download { background: var(--primary-rose); color: white; }
+    .btn-whatsapp { background: #25d366; color: white; }
 
-    .btn-whatsapp {
-      background: #25d366;
-      color: white;
-    }
-
-    /* Modal Clave Admin */
+    /* Modal Administradora */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -595,11 +578,15 @@
 </head>
 <body>
 
-  <!-- Columnas laterales de CEPIES UMSA -->
-  <div class="side-strip side-left" id="sideLeft"></div>
-  <div class="side-strip side-right" id="sideRight"></div>
+  <!-- MARCAS DE AGUA GIGANTES A LOS COSTADOS -->
+  <div class="watermark-side watermark-left">
+    <img class="logo-img-target" src="logo-cepies.jpg" alt="CEPIES UMSA">
+  </div>
+  <div class="watermark-side watermark-right">
+    <img class="logo-img-target" src="logo-cepies.jpg" alt="CEPIES UMSA">
+  </div>
 
-  <!-- Botón discreto de Administradora -->
+  <!-- Botón Administradora -->
   <button class="admin-float-btn" onclick="abrirModalAdmin()">🔒 Modo Admin</button>
 
   <div class="main-wrapper">
@@ -630,7 +617,7 @@
       <button class="btn-main" onclick="iniciarEvaluacion()">Comenzar mi Evaluación ➔</button>
     </div>
 
-    <!-- PANTALLA 2: JUEGO DIDÁCTICO CON DADO 3D -->
+    <!-- PANTALLA 2: JUEGO CON DADO 3D -->
     <div id="screen-game" class="card hidden">
       <div class="status-bar">
         <div>Colega: <span id="lblColega" style="font-weight:700;"></span></div>
@@ -644,7 +631,7 @@
         <div id="progressBar" class="progress-bar-fill" style="width: 10%;"></div>
       </div>
 
-      <!-- Escenario del Dado 3D -->
+      <!-- Dado 3D -->
       <div class="dice-stage">
         <div id="diceCube" class="cube-dice">
           <div class="cube-face f1"><span class="pip"></span></div>
@@ -659,28 +646,27 @@
         </div>
       </div>
 
-      <!-- Pregunta actual -->
+      <!-- Pregunta -->
       <div class="question-box">
         <div id="diceResultLabel" class="question-badge">Cara del Dado: 🎲</div>
         <p id="questionText" class="question-statement">Cargando reactivo didáctico...</p>
 
-        <!-- Opciones V / F -->
+        <!-- Botones V / F -->
         <div class="vf-grid">
           <button id="btnTrue" class="btn-vf btn-verdadero" onclick="evaluarRespuesta(true)">Verdadero</button>
           <button id="btnFalse" class="btn-vf btn-falso" onclick="evaluarRespuesta(false)">Falso</button>
         </div>
 
-        <!-- Explicación formativa -->
         <div id="feedbackBox" class="feedback-panel"></div>
       </div>
 
-      <!-- Botón visible para pasar al siguiente tiro de dado -->
+      <!-- Botón siguiente -->
       <button id="btnNext" class="next-step-btn" onclick="siguienteReactivo()">
         🎲 Tirar el dado para la siguiente pregunta ➔
       </button>
     </div>
 
-    <!-- PANTALLA 3: REPORTE FINAL Y CERTIFICADO -->
+    <!-- PANTALLA 3: REPORTE FINAL -->
     <div id="screen-report" class="card hidden">
       <div style="text-align: center; margin-bottom: 12px;">
         <span class="institution-pill">Evaluación Concluida</span>
@@ -692,7 +678,7 @@
         </p>
       </div>
 
-      <!-- Certificado que se convertirá en JPG -->
+      <!-- Certificado descargable -->
       <div id="certificateCapture" class="certificate-card">
         <img class="cert-logo logo-img-target" alt="CEPIES UMSA" src="logo-cepies.jpg">
         <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-soft);">
@@ -726,7 +712,6 @@
         </div>
       </div>
 
-      <!-- Acciones: Descargar y Compartir -->
       <div class="actions-grid">
         <button class="btn-main btn-download" onclick="descargarCertificadoJPG()">
           📥 Descargar en JPG
@@ -744,7 +729,7 @@
         Evaluación ya completada
       </h2>
       <p style="font-size:14px; color:var(--text-soft); margin: 12px 0 20px;">
-        Estimada/o colega, esta evaluación permite un único intento para garantizar la autenticidad diagnóstica. Si necesitas revisar tu reporte anterior, haz clic abajo:
+        Estimada/o colega, esta evaluación permite un único intento para garantizar la autenticidad diagnóstica.
       </p>
       <button class="btn-main" onclick="verMiReporteAnterior()" style="margin-bottom: 12px;">
         Ver mi comprobante previo
@@ -772,37 +757,14 @@
   </div>
 
   <script>
-    // Logo SVG por respaldo (Árbol de CEPIES)
-    const LOGO_SVG_BACKUP = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><circle cx="150" cy="150" r="146" fill="%23fdfdfd" stroke="%23c59b27" stroke-width="4"/><g fill="none" stroke="%23133b5c" stroke-width="8" stroke-linecap="round"><circle cx="150" cy="150" r="120" stroke-width="6"/><path d="M150 240 Q150 170 150 120 M150 160 Q100 130 70 80 M150 160 Q200 130 230 80 M150 130 Q120 100 100 50 M150 130 Q180 100 200 50"/><circle cx="150" cy="80" r="30"/><circle cx="95" cy="100" r="22"/><circle cx="205" cy="100" r="22"/></g><rect x="35" y="115" width="230" height="70" rx="14" fill="%23ffffff" fill-opacity="0.95" stroke="%23c59b27" stroke-width="2"/><text x="150" y="165" font-family="Montserrat,Arial,sans-serif" font-weight="900" font-size="52" text-anchor="middle" letter-spacing="1"><tspan fill="%23133b5c">cep</tspan><tspan fill="%23e11d48">i</tspan><tspan fill="%23133b5c">es</tspan></text></svg>`;
+    // Respaldo visual automático si no se halla el archivo logo-cepies.jpg
+    const LOGO_SVG_BACKUP = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><circle cx="150" cy="150" r="146" fill="%23ffffff" stroke="%23c59b27" stroke-width="4"/><g fill="none" stroke="%23133b5c" stroke-width="8" stroke-linecap="round"><circle cx="150" cy="150" r="120" stroke-width="6"/><path d="M150 240 Q150 170 150 120 M150 160 Q100 130 70 80 M150 160 Q200 130 230 80 M150 130 Q120 100 100 50 M150 130 Q180 100 200 50"/><circle cx="150" cy="80" r="30"/><circle cx="95" cy="100" r="22"/><circle cx="205" cy="100" r="22"/></g><rect x="35" y="115" width="230" height="70" rx="14" fill="%23ffffff" fill-opacity="0.95" stroke="%23c59b27" stroke-width="2"/><text x="150" y="165" font-family="Montserrat,Arial,sans-serif" font-weight="900" font-size="52" text-anchor="middle"><tspan fill="%23133b5c">cep</tspan><tspan fill="%23e11d48">i</tspan><tspan fill="%23133b5c">es</tspan></text></svg>`;
 
-    // Asegurar que si no encuentra logo-cepies.jpg use el vector nativo
     document.querySelectorAll('.logo-img-target').forEach(img => {
       img.onerror = () => { img.src = LOGO_SVG_BACKUP; };
     });
 
-    // Crear las columnas laterales de CEPIES
-    function initSideColumns() {
-      const left = document.getElementById("sideLeft");
-      const right = document.getElementById("sideRight");
-      left.innerHTML = "";
-      right.innerHTML = "";
-      for (let i = 0; i < 5; i++) {
-        const itemL = document.createElement("div");
-        itemL.className = "side-logo-item";
-        itemL.style.animationDelay = (i * 0.7) + "s";
-        itemL.innerHTML = `<img class="logo-img-target" src="logo-cepies.jpg" onerror="this.src='${LOGO_SVG_BACKUP}'" alt="CEPIES">`;
-        left.appendChild(itemL);
-
-        const itemR = document.createElement("div");
-        itemR.className = "side-logo-item";
-        itemR.style.animationDelay = (i * 0.7 + 0.35) + "s";
-        itemR.innerHTML = `<img class="logo-img-target" src="logo-cepies.jpg" onerror="this.src='${LOGO_SVG_BACKUP}'" alt="CEPIES">`;
-        right.appendChild(itemR);
-      }
-    }
-    initSideColumns();
-
-    // 10 Preguntas oficiales de Sergio Tobón, Julio Pimienta y Juan Antonio García Fraile
+    // 10 Preguntas oficiales (Tobón, Pimienta y García Fraile)
     const preguntas = [
       {
         t: "El modelo de competencias busca formar competencias y no solamente enseñar contenidos.",
@@ -856,14 +818,12 @@
       }
     ];
 
-    // Variables de Estado
     let nombreColega = "";
     let indiceActual = 0;
     let aciertos = 0;
     let tiempoRestante = 30;
     let timerId = null;
 
-    // Coordenadas tridimensionales exactas para cada cara del dado (1 al 6)
     const rotacionesDado = {
       1: { x: 0, y: 0 },
       2: { x: 0, y: -90 },
@@ -873,7 +833,6 @@
       6: { x: 90, y: 0 }
     };
 
-    // Verificar si ya completó su intento único al entrar
     window.addEventListener("DOMContentLoaded", () => {
       const intentoGuardado = localStorage.getItem("cepies_eval_realizada");
       if (intentoGuardado === "true") {
@@ -899,12 +858,10 @@
     }
 
     function cargarReactivo() {
-      // Actualizar encabezados y progreso
       document.getElementById("currIdx").textContent = (indiceActual + 1);
       const porcentaje = ((indiceActual + 1) / 10) * 100;
       document.getElementById("progressBar").style.width = porcentaje + "%";
 
-      // Ocultar feedback y botón siguiente
       const feedback = document.getElementById("feedbackBox");
       feedback.className = "feedback-panel";
       feedback.style.display = "none";
@@ -913,20 +870,15 @@
       const btnNext = document.getElementById("btnNext");
       btnNext.style.display = "none";
 
-      // Habilitar botones V / F
       const bTrue = document.getElementById("btnTrue");
       const bFalse = document.getElementById("btnFalse");
       bTrue.disabled = false;
       bFalse.disabled = false;
 
-      // Asignar pregunta actual
       const preg = preguntas[indiceActual];
       document.getElementById("questionText").textContent = preg.t;
 
-      // Tirar el dado 3D de forma vistosa
       animarTiroDado();
-
-      // Iniciar cuenta regresiva de 30 segundos
       iniciarTemporizador();
     }
 
@@ -935,7 +887,6 @@
       const caraAleatoria = Math.floor(Math.random() * 6) + 1;
       const rotBase = rotacionesDado[caraAleatoria];
 
-      // Giros completos (3 vueltas extra en cada eje para efecto realista)
       const extraGiroX = 360 * 2;
       const extraGiroY = 360 * 3;
 
@@ -972,7 +923,6 @@
     }
 
     function tiempoAgotado() {
-      // Bloquear botones
       document.getElementById("btnTrue").disabled = true;
       document.getElementById("btnFalse").disabled = true;
 
@@ -1027,7 +977,6 @@
     }
 
     function finalizarEvaluacion() {
-      // Calcular puntaje sobre 100
       const notaFinal = aciertos * 10;
       const fechaHoy = new Date().toLocaleDateString("es-BO", {
         year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute:'2-digit'
@@ -1042,7 +991,6 @@
         dictamen = "Buen avance formativo. Te recomendamos continuar profundizando en la articulación de saberes y la metacognición según el texto base de secuencias didácticas.";
       }
 
-      // Guardar en localStorage para que sea de único intento
       localStorage.setItem("cepies_eval_realizada", "true");
       localStorage.setItem("cepies_colega_nombre", nombreColega);
       localStorage.setItem("cepies_colega_nota", notaFinal);
@@ -1050,7 +998,6 @@
       localStorage.setItem("cepies_colega_fecha", fechaHoy);
       localStorage.setItem("cepies_colega_dictamen", dictamen);
 
-      // Desplegar reporte
       armarReporteVisual(nombreColega, notaFinal, aciertos, fechaHoy, dictamen);
       mostrarPantalla("screen-report");
     }
@@ -1074,7 +1021,6 @@
       mostrarPantalla("screen-report");
     }
 
-    // Descarga en formato JPG nítido
     function descargarCertificadoJPG() {
       const elemento = document.getElementById("certificateCapture");
       html2canvas(elemento, {
@@ -1089,7 +1035,6 @@
       });
     }
 
-    // Compartir por WhatsApp con texto redactado
     function compartirWhatsApp() {
       const nota = document.getElementById("certNota").textContent;
       const texto = encodeURIComponent(
@@ -1102,7 +1047,6 @@
       window.open(`https://api.whatsapp.com/send?text=${texto}`, "_blank");
     }
 
-    // Lógica del Administrador (Clave: 123*)
     function abrirModalAdmin() {
       document.getElementById("modalAdmin").style.display = "flex";
       document.getElementById("adminPasswordInput").value = "";
