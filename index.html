@@ -3,1574 +3,1137 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evaluación Formativa: Secuencias Didácticas por Competencias</title>
-
-  <!-- Tipografías académicas y formales -->
+  <title>Evaluación Didáctica - CEPIES UMSA</title>
+  
+  <!-- Tipografías elegantes y amigables -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600;1,700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Librerías vía CDN para renderizado JPG y celebración -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  
+  <!-- html2canvas para descargar en JPG -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --rose-bg-soft: #fcf4f7;
-      --rose-50: #fff1f6;
-      --rose-100: #ffe4ee;
-      --rose-200: #fecddf;
-      --rose-300: #f8a5c2;
-      --rose-400: #f472b6;
-      --rose-600: #db2777;
-      --rose-700: #be185d;
-      --rose-800: #9d174d;
-      --rose-900: #831843;
-      --gold-royal: #c59b27;
-      --gold-deep: #927014;
-      --gold-light: #fef3c7;
-      --gold-border: #e6ca65;
-      --card-bg: rgba(255, 255, 255, 0.97);
-      --dice-size: 86px;
-      --shadow-rose: rgba(157, 23, 77, 0.16);
+      --bg-page: #fdf2f4;
+      --card-bg: rgba(255, 255, 255, 0.94);
+      --primary-rose: #d84b7a;
+      --primary-dark: #b12b58;
+      --accent-gold: #c59b27;
+      --gold-light: #fff8e7;
+      --text-main: #37232a;
+      --text-soft: #6c4b57;
+      --true-color: #15803d;
+      --false-color: #b91c1c;
+      --border-soft: #f4c2d7;
+      --shadow-soft: 0 15px 35px rgba(216, 75, 122, 0.12);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: 'Montserrat', sans-serif;
     }
 
     body {
-      background: radial-gradient(circle at 10% 15%, #ffeaf1 0%, #fad4e3 38%, #f8bfd7 72%, #f2a8c7 100%);
-      font-family: 'Montserrat', sans-serif;
-      color: #374151;
+      background: radial-gradient(circle at 10% 20%, #ffeef2 0%, #fae1e8 50%, #f7d6e0 100%);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Columnas laterales decorativas con el logo de CEPIES */
+    .side-strip {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 110px;
+      display: flex;
       flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      padding: 20px 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    .side-left { left: 15px; }
+    .side-right { right: 15px; }
+
+    .side-logo-item {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      background: #ffffff;
+      padding: 4px;
+      box-shadow: 0 4px 15px rgba(216, 75, 122, 0.2);
+      border: 2px solid var(--accent-gold);
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px 16px;
-      position: relative;
+      overflow: hidden;
+      animation: floatBadge 6s ease-in-out infinite alternate;
     }
 
-    .bg-sparkle {
-      position: fixed;
-      pointer-events: none;
-      font-size: 15px;
-      opacity: 0.35;
-      animation: floatSparkle 7s infinite ease-in-out;
-      z-index: 1;
-      color: var(--rose-700);
-    }
-
-    @keyframes floatSparkle {
-      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
-      50% { transform: translateY(-18px) rotate(16deg); opacity: 0.6; }
-    }
-
-    .app-card {
-      position: relative;
-      z-index: 10;
+    .side-logo-item img {
       width: 100%;
-      max-width: 690px;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    @keyframes floatBadge {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-10px) rotate(3deg); }
+    }
+
+    @media (max-width: 900px) {
+      .side-strip { display: none; }
+    }
+
+    /* Contenedor central */
+    .main-wrapper {
+      width: 100%;
+      max-width: 720px;
+      padding: 30px 16px 60px;
+      z-index: 2;
+    }
+
+    /* Botón flotante para la administradora */
+    .admin-float-btn {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-soft);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary-dark);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 99;
+      transition: all 0.2s;
+    }
+    .admin-float-btn:hover {
+      background: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Tarjetas principales */
+    .card {
       background: var(--card-bg);
-      border-radius: 28px;
-      border: 1.5px solid var(--rose-200);
-      box-shadow: 0 24px 55px var(--shadow-rose), 0 0 0 1px rgba(255, 255, 255, 0.95) inset;
-      backdrop-filter: blur(14px);
-      padding: 34px 28px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      padding: 32px 28px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    /* Encabezado */
+    .header-box {
       text-align: center;
+      margin-bottom: 24px;
     }
 
-    .emblem {
-      font-size: 26px;
-      color: var(--gold-royal);
-      margin-bottom: 4px;
-      filter: drop-shadow(0 2px 4px rgba(197, 155, 39, 0.3));
-    }
-
-    .badge-institution {
-      display: inline-block;
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--rose-900);
-      background: #fdf2f8;
-      border: 1px solid var(--rose-300);
-      padding: 4px 14px;
-      border-radius: 999px;
+    .header-logo-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
       margin-bottom: 12px;
     }
 
-    .academic-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 24px;
+    .header-logo-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(216, 75, 122, 0.2);
+      border: 2px solid var(--accent-gold);
+      background: #fff;
+    }
+
+    .institution-pill {
+      display: inline-block;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.4px;
-      line-height: 1.25;
-      color: var(--rose-900);
-      margin-bottom: 6px;
-    }
-
-    .academic-subtitle {
-      font-size: 13px;
-      font-weight: 500;
-      color: #6b7280;
-      margin-bottom: 18px;
-    }
-
-    .authors-card {
-      background: #fff8fa;
-      border: 1px solid #fbcfe8;
-      border-radius: 14px;
-      padding: 12px 18px;
-      margin-bottom: 22px;
-      text-align: left;
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .authors-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      font-weight: 700;
-      color: var(--rose-800);
-      font-size: 12px;
-      user-select: none;
-    }
-
-    .authors-body {
-      display: none;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed var(--rose-200);
-      color: #4b5563;
-    }
-
-    .authors-body.active {
-      display: block;
-    }
-
-    .author-item {
-      margin-bottom: 6px;
-      padding-left: 8px;
-      border-left: 2px solid var(--gold-royal);
-    }
-
-    .input-field-group {
-      text-align: left;
-      margin: 20px 0 16px;
-    }
-
-    .input-field-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--primary-dark);
+      background: var(--gold-light);
+      border: 1px solid var(--accent-gold);
+      padding: 5px 14px;
+      border-radius: 20px;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--rose-900);
-      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      line-height: 1.25;
+      margin: 12px 0 6px;
+    }
+
+    .authors-note {
+      font-size: 12px;
+      color: var(--text-soft);
+      line-height: 1.5;
+      margin-top: 6px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 10px;
+      border-left: 3px solid var(--primary-rose);
+      text-align: left;
+    }
+
+    /* Pantalla 1: Registro del Colega */
+    .input-group {
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 8px;
     }
 
     .input-text {
       width: 100%;
-      padding: 13px 16px;
+      padding: 14px 18px;
+      border: 2px solid var(--border-soft);
       border-radius: 12px;
-      border: 1.5px solid var(--rose-300);
-      background: #fff;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 14px;
-      color: #1f2937;
+      font-size: 16px;
       outline: none;
-      transition: all 0.2s ease;
+      transition: all 0.2s;
+      background: #fff;
     }
 
     .input-text:focus {
-      border-color: var(--rose-700);
-      box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.15);
+      border-color: var(--primary-rose);
+      box-shadow: 0 0 0 3px rgba(216, 75, 122, 0.15);
     }
 
     .btn-main {
-      background: linear-gradient(135deg, #be185d 0%, #9d174d 100%);
-      color: #ffffff;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      border: 1px solid var(--rose-300);
-      padding: 13px 28px;
-      border-radius: 999px;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(157, 23, 77, 0.25);
-      transition: all 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
       width: 100%;
-      text-decoration: none;
+      background: linear-gradient(135deg, var(--primary-rose) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      border: none;
+      padding: 15px 22px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(216, 75, 122, 0.3);
+      transition: all 0.2s;
     }
 
-    .btn-main:hover:not(:disabled) {
+    .btn-main:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(157, 23, 77, 0.35);
-      background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+      box-shadow: 0 12px 24px rgba(216, 75, 122, 0.4);
     }
 
-    .btn-main:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .btn-secondary {
-      background: #ffffff;
-      color: var(--rose-900);
-      border: 1.5px solid var(--rose-300);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-    }
-
-    .btn-secondary:hover:not(:disabled) {
-      background: #fff1f6;
-    }
-
-    .btn-whatsapp {
-      background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-      border: 1px solid #10b981;
-      color: white;
-      box-shadow: 0 8px 18px rgba(18, 140, 126, 0.25);
-    }
-
-    /* BOTÓN DESTACADO PARA SIGUIENTE PREGUNTA */
-    .btn-next-action {
-      background: linear-gradient(135deg, #db2777 0%, #9d174d 100%);
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: 800;
-      padding: 16px 24px;
-      border-radius: 16px;
-      border: 2px solid #fecddf;
-      box-shadow: 0 10px 24px rgba(219, 39, 119, 0.35), 0 0 0 3px rgba(254, 205, 223, 0.6);
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      cursor: pointer;
-      width: 100%;
-      animation: pulseGlow 1.8s infinite ease-in-out;
-      transition: all 0.25s ease;
-    }
-
-    @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); box-shadow: 0 10px 24px rgba(219, 39, 119, 0.35); }
-      50% { transform: scale(1.02); box-shadow: 0 14px 30px rgba(219, 39, 119, 0.55); }
-    }
-
-    .btn-next-action:hover {
-      transform: translateY(-3px) scale(1.02);
-      filter: brightness(1.05);
-    }
-
-    /* PANEL DEL TEMPORIZADOR DE 30 SEGUNDOS */
-    .timer-container {
-      background: #ffffff;
-      border: 1.5px solid var(--rose-200);
-      border-radius: 16px;
-      padding: 10px 14px;
-      margin-bottom: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .timer-header {
+    /* Pantalla 2: Interfaz de Juego con Dado 3D */
+    .status-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--rose-900);
-    }
-
-    .timer-countdown {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--rose-700);
-      font-feature-settings: "tnum";
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .timer-countdown.critical {
-      color: #dc2626;
-      animation: flashCritical 0.6s infinite alternate;
-    }
-
-    @keyframes flashCritical {
-      from { transform: scale(1); }
-      to { transform: scale(1.12); }
-    }
-
-    .timer-bar-track {
-      width: 100%;
-      height: 8px;
-      background: #fdf2f8;
-      border-radius: 999px;
-      overflow: hidden;
-      border: 1px solid var(--rose-200);
-    }
-
-    .timer-bar-fill {
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(90deg, #10b981 0%, #f59e0b 55%, #ef4444 100%);
-      transition: width 1s linear;
-    }
-
-    /* Indicadores de métricas superiores */
-    .eval-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      background: linear-gradient(135deg, #fff5f8 0%, #fdf2f7 100%);
-      border: 1px solid var(--rose-200);
-      border-radius: 16px;
-      padding: 10px 12px;
+      padding-bottom: 14px;
       margin-bottom: 16px;
-    }
-
-    .stat-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-    }
-
-    .stat-lbl {
-      font-size: 10.5px;
+      border-bottom: 1px solid var(--border-soft);
+      font-size: 13px;
       font-weight: 600;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
+      color: var(--primary-dark);
     }
 
-    .stat-val {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--rose-900);
-      font-feature-settings: "tnum";
-    }
-
-    /* Escenario tridimensional para el dado */
-    .dice-stage {
-      width: 100%;
-      height: 140px;
-      perspective: 800px;
+    /* Temporizador */
+    .timer-wrap {
       display: flex;
       align-items: center;
+      gap: 8px;
+      background: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border-soft);
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .timer-danger {
+      color: var(--false-color) !important;
+      border-color: var(--false-color) !important;
+      animation: pulseAlert 1s infinite alternate;
+    }
+
+    @keyframes pulseAlert {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: #fce4ec;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-gold), var(--primary-rose));
+      transition: width 0.3s;
+    }
+
+    /* Escenario del Dado 3D */
+    .dice-stage {
+      height: 120px;
+      display: flex;
       justify-content: center;
-      position: relative;
-      margin-bottom: 16px;
+      align-items: center;
+      perspective: 800px;
+      margin: 10px 0 20px;
     }
 
-    .dice-floor-shadow {
-      position: absolute;
-      bottom: 12px;
-      width: 86px;
-      height: 20px;
-      background: radial-gradient(ellipse at center, rgba(131, 24, 67, 0.28) 0%, transparent 70%);
-      border-radius: 50%;
-      transition: all 0.3s ease;
-    }
-
-    .dice-cube {
-      width: var(--dice-size);
-      height: var(--dice-size);
+    .cube-dice {
+      width: 65px;
+      height: 65px;
       position: relative;
       transform-style: preserve-3d;
-      transform: rotateX(-15deg) rotateY(25deg);
-      transition: transform 1.4s cubic-bezier(0.2, 0.85, 0.35, 1.2);
-    }
-
-    .dice-cube.rolling {
-      animation: dice3dRealisticSpin 1.2s infinite linear;
-    }
-
-    @keyframes dice3dRealisticSpin {
-      0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(-22px); }
-      33% { transform: rotateX(240deg) rotateY(150deg) rotateZ(90deg) translateY(6px); }
-      66% { transform: rotateX(480deg) rotateY(360deg) rotateZ(210deg) translateY(-18px); }
-      100% { transform: rotateX(720deg) rotateY(720deg) rotateZ(360deg) translateY(-22px); }
+      transition: transform 1.2s cubic-bezier(0.2, 0.85, 0.4, 1.2);
     }
 
     .cube-face {
       position: absolute;
-      width: var(--dice-size);
-      height: var(--dice-size);
-      background: linear-gradient(135deg, #ffffff 0%, #fff7fb 60%, #fedde9 100%);
-      border: 2px solid var(--rose-300);
-      border-radius: 16px;
-      box-shadow: inset 0 0 8px rgba(232, 67, 147, 0.15), inset 0 0 0 1px #fff;
-      display: grid;
-      padding: 9px;
-    }
-
-    .pip {
-      display: block;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #e11d48 30%, #9f1239 100%);
-      box-shadow: 0 1px 3px rgba(159, 18, 57, 0.35);
-      justify-self: center;
-      align-self: center;
-    }
-
-    .pip-center-gold {
-      background: radial-gradient(circle, #f59e0b 30%, #b45309 100%);
-      box-shadow: 0 1px 4px rgba(180, 83, 9, 0.4);
-    }
-
-    .face-front  { transform: translateZ(43px); grid-template: 1fr / 1fr; }
-    .face-back   { transform: rotateY(180deg) translateZ(43px); grid-template: repeat(2, 1fr) / repeat(2, 1fr); }
-    .face-left   { transform: rotateY(-90deg) translateZ(43px); grid-template: repeat(3, 1fr) / repeat(3, 1fr); }
-    .face-right  { transform: rotateY(90deg) translateZ(43px); grid-template: repeat(2, 1fr) / repeat(2, 1fr); }
-    .face-top    { transform: rotateX(90deg) translateZ(43px); grid-template: repeat(3, 1fr) / repeat(3, 1fr); }
-    .face-bottom { transform: rotateX(-90deg) translateZ(43px); grid-template: repeat(3, 1fr) / repeat(2, 1fr); }
-
-    .face-back .pip:nth-child(2) { grid-column: 2; grid-row: 2; }
-    .face-left .pip:nth-child(1) { grid-column: 1; grid-row: 1; }
-    .face-left .pip:nth-child(2) { grid-column: 2; grid-row: 2; }
-    .face-left .pip:nth-child(3) { grid-column: 3; grid-row: 3; }
-    .face-top .pip:nth-child(1) { grid-column: 1; grid-row: 1; }
-    .face-top .pip:nth-child(2) { grid-column: 3; grid-row: 1; }
-    .face-top .pip:nth-child(3) { grid-column: 2; grid-row: 2; }
-    .face-top .pip:nth-child(4) { grid-column: 1; grid-row: 3; }
-    .face-top .pip:nth-child(5) { grid-column: 3; grid-row: 3; }
-
-    /* Tarjeta del reactivo actual */
-    .question-card {
-      margin-top: 18px;
+      width: 65px;
+      height: 65px;
       background: #ffffff;
-      border: 1.5px solid var(--rose-200);
-      border-radius: 18px;
-      padding: 22px 18px;
-      box-shadow: 0 8px 25px rgba(157, 23, 77, 0.05);
-      animation: fadeInCard 0.3s ease-out;
+      border: 2px solid #e2b0c3;
+      border-radius: 12px;
+      box-shadow: inset 0 0 10px rgba(216, 75, 122, 0.15);
+      display: grid;
+      padding: 7px;
     }
 
-    @keyframes fadeInCard {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Puntos del dado (pips) */
+    .pip {
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle, var(--primary-rose) 35%, var(--primary-dark) 100%);
+      border-radius: 50%;
+      align-self: center;
+      justify-self: center;
     }
 
-    .question-category {
+    .f1 { transform: rotateY(0deg) translateZ(32.5px); display: flex; justify-content: center; align-items: center; }
+    .f2 { transform: rotateY(90deg) translateZ(32.5px); grid-template-columns: 1fr 1fr; }
+    .f2 .pip:nth-child(1) { align-self: start; justify-self: start; }
+    .f2 .pip:nth-child(2) { align-self: end; justify-self: end; }
+
+    .f3 { transform: rotateY(180deg) translateZ(32.5px); grid-template-columns: 1fr 1fr 1fr; }
+    .f3 .pip:nth-child(1) { align-self: start; justify-self: start; }
+    .f3 .pip:nth-child(2) { align-self: center; justify-self: center; }
+    .f3 .pip:nth-child(3) { align-self: end; justify-self: end; }
+
+    .f4 { transform: rotateY(-90deg) translateZ(32.5px); grid-template-columns: 1fr 1fr; }
+    .f4 .pip:nth-child(2) { justify-self: end; }
+    .f4 .pip:nth-child(3) { align-self: end; }
+    .f4 .pip:nth-child(4) { align-self: end; justify-self: end; }
+
+    .f5 { transform: rotateX(90deg) translateZ(32.5px); grid-template-columns: 1fr 1fr 1fr; }
+    .f5 .pip:nth-child(1) { align-self: start; justify-self: start; }
+    .f5 .pip:nth-child(2) { align-self: start; justify-self: end; }
+    .f5 .pip:nth-child(3) { align-self: center; justify-self: center; }
+    .f5 .pip:nth-child(4) { align-self: end; justify-self: start; }
+    .f5 .pip:nth-child(5) { align-self: end; justify-self: end; }
+
+    .f6 { transform: rotateX(-90deg) translateZ(32.5px); grid-template-columns: 1fr 1fr; }
+
+    /* Caja de pregunta */
+    .question-box {
+      background: #ffffff;
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 22px;
+      margin: 16px 0;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(216, 75, 122, 0.06);
+    }
+
+    .question-badge {
+      display: inline-block;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 1px;
       text-transform: uppercase;
-      color: var(--rose-800);
-      background: var(--rose-50);
-      border: 1px solid var(--rose-200);
-      padding: 3px 12px;
-      border-radius: 999px;
-      display: inline-block;
-      margin-bottom: 10px;
+      background: #ffe4ee;
+      color: var(--primary-dark);
+      padding: 4px 12px;
+      border-radius: 12px;
+      margin-bottom: 12px;
     }
 
     .question-statement {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 19.5px;
+      font-size: 17px;
       font-weight: 600;
-      color: #1f2937;
+      color: var(--text-main);
       line-height: 1.45;
-      margin-bottom: 18px;
-      font-style: italic;
     }
 
-    .options-grid {
+    /* Botones Verdadero y Falso */
+    .vf-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 15px;
+      margin-top: 20px;
     }
 
-    .btn-opt {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      padding: 13px 14px;
-      border-radius: 12px;
+    .btn-vf {
       border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s ease;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
       color: #ffffff;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .btn-opt-v {
-      background: linear-gradient(135deg, #059669 0%, #047857 100%);
-      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+    .btn-verdadero {
+      background: linear-gradient(135deg, #22c55e, var(--true-color));
+      box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
     }
 
-    .btn-opt-f {
-      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+    .btn-falso {
+      background: linear-gradient(135deg, #ef4444, var(--false-color));
+      box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
     }
 
-    .btn-opt:hover:not(:disabled) {
-      transform: translateY(-2px);
-      filter: brightness(1.06);
-    }
-
-    .btn-opt:disabled {
-      opacity: 0.5;
+    .btn-vf:disabled {
+      opacity: 0.55;
       cursor: not-allowed;
-      transform: none;
+      transform: none !important;
     }
 
-    .feedback-box {
-      margin-top: 16px;
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-size: 12.8px;
-      line-height: 1.5;
+    /* Retroalimentación inmediata */
+    .feedback-panel {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 14px;
       text-align: left;
+      line-height: 1.4;
+      display: none;
     }
 
-    .feedback-box.correct {
+    .feedback-panel.correct {
+      display: block;
       background: #ecfdf5;
       border: 1px solid #a7f3d0;
       color: #065f46;
     }
 
-    .feedback-box.incorrect {
+    .feedback-panel.incorrect {
+      display: block;
       background: #fef2f2;
       border: 1px solid #fecaca;
       color: #991b1b;
     }
 
-    .feedback-box.timeout {
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      color: #92400e;
-    }
-
-    .feedback-title {
+    /* Botón claro para avanzar */
+    .next-step-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent-gold) 0%, #b8860b 100%);
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 16px;
       font-weight: 700;
-      font-size: 13.5px;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      margin-top: 18px;
+      cursor: pointer;
+      display: none;
+      box-shadow: 0 8px 20px rgba(197, 155, 39, 0.35);
+      animation: bounceNext 1.5s infinite alternate;
     }
 
-    .feedback-body {
-      font-weight: 500;
-      color: #374151;
+    @keyframes bounceNext {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(197, 155, 39, 0.5); }
     }
 
-    /* CERTIFICADO FINAL PARA DESCARGA */
+    /* Pantalla de Reporte / Comprobante Oficial */
     .certificate-card {
       background: #ffffff;
-      border: 3px double var(--gold-border);
+      border: 3px double var(--accent-gold);
       border-radius: 20px;
-      padding: 28px 24px;
-      box-shadow: 0 10px 30px rgba(157, 23, 77, 0.08);
-      position: relative;
+      padding: 26px 20px;
       text-align: center;
-      margin-bottom: 22px;
-      background-image: radial-gradient(circle at 50% 50%, rgba(255, 241, 246, 0.5) 0%, #ffffff 80%);
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      margin: 15px 0 25px;
     }
 
-    .cert-seal {
-      font-size: 32px;
-      color: var(--gold-royal);
-      margin-bottom: 6px;
+    .cert-logo {
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: block;
+      border: 2px solid var(--accent-gold);
     }
 
-    .cert-heading {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 23px;
+    .cert-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
       font-weight: 700;
-      color: var(--rose-900);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      color: var(--primary-dark);
       margin-bottom: 4px;
-    }
-
-    .cert-subhead {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #6b7280;
-      margin-bottom: 16px;
-    }
-
-    .cert-grant {
-      font-size: 12px;
-      color: #4b5563;
-      margin-bottom: 6px;
     }
 
     .cert-name {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--rose-900);
-      border-bottom: 2px solid var(--rose-200);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--accent-gold);
+      margin: 12px 0;
+      border-bottom: 1px dashed var(--border-soft);
+      padding-bottom: 6px;
       display: inline-block;
-      padding: 2px 24px;
-      margin-bottom: 16px;
     }
 
-    .cert-score-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      background: #fff8fa;
-      border: 1px solid var(--rose-200);
-      border-radius: 12px;
-      padding: 12px 10px;
-      margin-bottom: 16px;
-    }
-
-    .cert-score-box {
+    .score-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff0f5 0%, #ffd6e4 100%);
+      border: 2px solid var(--primary-rose);
+      margin: 12px auto;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
     }
 
-    .cert-score-label {
+    .score-number {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      line-height: 1;
+    }
+
+    .score-label {
       font-size: 10px;
-      font-weight: 600;
       text-transform: uppercase;
-      color: #6b7280;
-    }
-
-    .cert-score-val {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--rose-900);
-    }
-
-    .cert-level-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
-      border: 1px solid var(--rose-300);
-      color: var(--rose-900);
-      font-size: 12.5px;
-      font-weight: 700;
-      padding: 6px 18px;
-      border-radius: 999px;
-      margin-bottom: 14px;
+      font-weight: 600;
+      color: var(--text-soft);
     }
 
     .cert-feedback {
-      background: #fdfafb;
-      border-left: 3px solid var(--rose-700);
-      padding: 10px 14px;
-      text-align: left;
-      font-size: 12.5px;
-      line-height: 1.5;
-      color: #374151;
-      margin-bottom: 16px;
-      border-radius: 0 10px 10px 0;
+      background: #fff9fa;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.45;
+      margin-top: 12px;
+      border: 1px solid #ffe1ec;
     }
 
-    .cert-citation {
-      font-size: 10px;
-      color: #6b7280;
-      line-height: 1.4;
-      border-top: 1px solid #f3f4f6;
-      padding-top: 8px;
+    .actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
-    .admin-modal-overlay {
+    .btn-download {
+      background: var(--primary-rose);
+      color: white;
+    }
+
+    .btn-whatsapp {
+      background: #25d366;
+      color: white;
+    }
+
+    /* Modal Clave Admin */
+    .modal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(131, 24, 67, 0.45);
-      backdrop-filter: blur(6px);
-      z-index: 100;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 16px;
-    }
-
-    .admin-modal {
-      background: #ffffff;
-      border-radius: 22px;
-      border: 1.5px solid var(--rose-300);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      max-width: 420px;
-      width: 100%;
-      padding: 28px 24px;
-      text-align: center;
-    }
-
-    .admin-trigger-btn {
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid var(--rose-300);
-      color: var(--rose-800);
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 11.5px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(157, 23, 77, 0.15);
-      backdrop-filter: blur(6px);
-      z-index: 50;
-      display: flex;
       align-items: center;
-      gap: 6px;
+      z-index: 1000;
+      padding: 16px;
+      display: none;
     }
 
-    .admin-trigger-btn:hover {
-      background: #ffffff;
-      transform: translateY(-2px);
+    .modal-box {
+      background: white;
+      padding: 24px;
+      border-radius: 18px;
+      width: 100%;
+      max-width: 340px;
+      text-align: center;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    .gap-vertical {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    @media (max-width: 540px) {
-      .app-card { padding: 24px 18px; }
-      .academic-title { font-size: 20px; }
-      .question-statement { font-size: 17px; }
-      .cert-name { font-size: 22px; }
-    }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-  <div class="bg-sparkle" style="top: 8%; left: 10%;">✦</div>
-  <div class="bg-sparkle" style="top: 18%; right: 12%; animation-delay: 2s;">✧</div>
-  <div class="bg-sparkle" style="bottom: 14%; left: 8%; animation-delay: 4s;">✦</div>
-  <div class="bg-sparkle" style="bottom: 18%; right: 9%; animation-delay: 1.5s;">✧</div>
+  <!-- Columnas laterales de CEPIES UMSA -->
+  <div class="side-strip side-left" id="sideLeft"></div>
+  <div class="side-strip side-right" id="sideRight"></div>
 
-  <main class="app-card">
-    <div class="emblem">⚜</div>
-    <span class="badge-institution">Evaluación Formativa Colegiada</span>
-    <h1 class="academic-title">SECUENCIAS DIDÁCTICAS:<br>APRENDIZAJE Y EVALUACIÓN DE COMPETENCIAS</h1>
-    <p class="academic-subtitle">Instrumento Didáctico de Valoración Docente • 10 Reactivos</p>
+  <!-- Botón discreto de Administradora -->
+  <button class="admin-float-btn" onclick="abrirModalAdmin()">🔒 Modo Admin</button>
 
-    <!-- Ficha Académica Desplegable -->
-    <div class="authors-card">
-      <div class="authors-header" onclick="toggleAuthorsPanel()">
-        <span>Referencia Bibliográfica & Adscripción Académica</span>
-        <span id="accordion-arrow">▾</span>
-      </div>
-      <div class="authors-body" id="authors-body">
-        <div class="author-item">
-          <strong>Ph.D. Sergio Tobón Tobón</strong><br>
-          Director del Centro de Investigación en Formación y Evaluación (CIFE)
+  <div class="main-wrapper">
+
+    <!-- PANTALLA 1: INGRESO -->
+    <div id="screen-welcome" class="card">
+      <div class="header-box">
+        <div class="header-logo-row">
+          <img class="header-logo-img logo-img-target" alt="CEPIES UMSA" src="logo-cepies.jpg">
         </div>
-        <div class="author-item">
-          <strong>Dr. Julio Herminio Pimienta Prieto</strong><br>
-          Instituto Superior Pedagógico "Enrique José Varona" (Cuba) • Univ. Anáhuac (México) • Univ. Complutense (Madrid)
-        </div>
-        <div class="author-item">
-          <strong>Dr. Juan Antonio García Fraile</strong><br>
-          Facultad de Educación - Centro de Formación del Profesorado, Universidad Complutense (Madrid)
+        <span class="institution-pill">CEPIES • UMSA La Paz</span>
+        <h1>Evaluación Didáctica por Competencias</h1>
+        <div class="authors-note">
+          Basado en el libro: <em>"Secuencias Didácticas: Aprendizaje y Evaluación de Competencias"</em><br>
+          <strong>Autores:</strong> Ph.D. Sergio Tobón Tobón (CIFE), Dr. Julio Herminio Pimienta Prieto y Dr. Juan Antonio García Fraile (Universidad Complutense de Madrid).
         </div>
       </div>
+
+      <p style="font-size: 14px; color: var(--text-soft); text-align: center; margin-bottom: 15px;">
+        ¡Hola, colega! Esta es una actividad didáctica de 10 preguntas. Tirarás el dado para cada reactivo y dispondrás de 30 segundos para contestar Verdadero o Falso.
+      </p>
+
+      <div class="input-group">
+        <label for="inputColega">¿Cuál es tu nombre, colega?</label>
+        <input type="text" id="inputColega" class="input-text" placeholder="Escribe tu nombre y apellido aquí..." autofocus />
+      </div>
+
+      <button class="btn-main" onclick="iniciarEvaluacion()">Comenzar mi Evaluación ➔</button>
     </div>
 
-    <!-- VISTA 1: REGISTRO INICIAL -->
-    <section id="view-registration">
-      <div style="background: #fff8fa; border: 1px solid var(--rose-200); border-radius: 16px; padding: 18px 16px; margin-bottom: 20px; text-align: left; font-size: 13px; line-height: 1.5; color: #4b5563;">
-        <p style="font-weight: 600; color: var(--rose-900); margin-bottom: 6px;">Protocolo de Aplicación:</p>
-        <p>Estimado/a colega: Esta valoración contiene exactamente <strong>10 reactivos</strong> seleccionados sobre el enfoque socioformativo. Dispone de <strong>30 segundos</strong> por cada reactivo y de <strong>una única oportunidad</strong> de resolución en este dispositivo. Al concluir, podrá descargar su comprobante oficial en formato JPG para envío por WhatsApp.</p>
+    <!-- PANTALLA 2: JUEGO DIDÁCTICO CON DADO 3D -->
+    <div id="screen-game" class="card hidden">
+      <div class="status-bar">
+        <div>Colega: <span id="lblColega" style="font-weight:700;"></span></div>
+        <div class="timer-wrap" id="timerBadge">
+          <span>⏳</span> <span id="timerTxt">30s</span>
+        </div>
+        <div>Pregunta <span id="currIdx">1</span> de 10</div>
       </div>
 
-      <div class="input-field-group">
-        <label for="participant-name">Nombre y Apellido del Docente Evaluado:</label>
-        <input type="text" id="participant-name" class="input-text" placeholder="Ej. Prof. María Morales" autocomplete="name" />
-      </div>
-
-      <button id="btn-start-eval" class="btn-main" onclick="iniciarEvaluacionDocente()">
-        <span>Comenzar Evaluación Didáctica (10 Preguntas)</span>
-      </button>
-    </section>
-
-    <!-- VISTA 2: BLOQUEO POR INTENTO ÚNICO -->
-    <section id="view-blocked" class="hidden">
-      <div style="background: #fdf2f8; border: 1.5px solid var(--rose-300); border-radius: 18px; padding: 24px 20px; margin-bottom: 20px;">
-        <div style="font-size: 34px; margin-bottom: 10px;">🔒</div>
-        <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 22px; color: var(--rose-900); margin-bottom: 8px;">Evaluación Previamente Registrada</h3>
-        <p style="font-size: 13.5px; color: #4b5563; line-height: 1.5; margin-bottom: 14px;">
-          El sistema indica que la evaluación de <strong id="blocked-name" style="color: var(--rose-900);"></strong> ya fue completada en este dispositivo.
-        </p>
-        <p style="font-size: 12px; color: #6b7280; margin-bottom: 16px;">
-          Cada docente cuenta con un único intento oficial. Si desea volver a ver o descargar su comprobante final, pulse la opción correspondiente:
-        </p>
-        
-        <div class="gap-vertical">
-          <button class="btn-main" onclick="mostrarCertificadoGuardado()">
-            <span>Ver Comprobante Final Registrado</span>
-          </button>
-          <button class="btn-main btn-secondary" onclick="abrirModalAdmin()">
-            <span>Acceso Administrativo / Desbloqueo</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- VISTA 3: SALA DE EVALUACIÓN CON DADO 3D Y TEMPORIZADOR -->
-    <section id="view-evaluation" class="hidden">
-      <!-- Indicadores de estado -->
-      <div class="eval-stats">
-        <div class="stat-box">
-          <span class="stat-lbl">Docente</span>
-          <span class="stat-val" id="eval-student-name" style="font-size: 13px; text-overflow: ellipsis; white-space: nowrap; max-width: 130px; overflow: hidden;">--</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-lbl">Aciertos</span>
-          <span class="stat-val" id="eval-hits">0</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-lbl">Reactivo</span>
-          <span class="stat-val" id="eval-progress">0 / 10</span>
-        </div>
-      </div>
-
-      <!-- Barra de tiempo (30 Segundos) -->
-      <div class="timer-container" id="timer-box">
-        <div class="timer-header">
-          <span>Tiempo para este reactivo:</span>
-          <span class="timer-countdown" id="timer-text">⏱ 30s</span>
-        </div>
-        <div class="timer-bar-track">
-          <div class="timer-bar-fill" id="timer-bar"></div>
-        </div>
+      <div class="progress-bar-bg">
+        <div id="progressBar" class="progress-bar-fill" style="width: 10%;"></div>
       </div>
 
       <!-- Escenario del Dado 3D -->
       <div class="dice-stage">
-        <div class="dice-floor-shadow" id="dice-shadow"></div>
-        <div class="dice-cube" id="cube">
-          <div class="cube-face face-front"><span class="pip pip-center-gold"></span></div>
-          <div class="cube-face face-back"><span class="pip"></span><span class="pip"></span></div>
-          <div class="cube-face face-left"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
-          <div class="cube-face face-right"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
-          <div class="cube-face face-top"><span class="pip"></span><span class="pip"></span><span class="pip pip-center-gold"></span><span class="pip"></span><span class="pip"></span></div>
-          <div class="cube-face face-bottom"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+        <div id="diceCube" class="cube-dice">
+          <div class="cube-face f1"><span class="pip"></span></div>
+          <div class="cube-face f2"><span class="pip"></span><span class="pip"></span></div>
+          <div class="cube-face f3"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+          <div class="cube-face f4"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+          <div class="cube-face f5"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+          <div class="cube-face f6">
+            <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+            <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+          </div>
         </div>
       </div>
 
-      <!-- Botón de tiro inicial de reactivo -->
-      <button id="btn-roll" class="btn-main" onclick="lanzarDadoDocente()">
-        <span>Lanzar Dado para Obtener Reactivo</span>
+      <!-- Pregunta actual -->
+      <div class="question-box">
+        <div id="diceResultLabel" class="question-badge">Cara del Dado: 🎲</div>
+        <p id="questionText" class="question-statement">Cargando reactivo didáctico...</p>
+
+        <!-- Opciones V / F -->
+        <div class="vf-grid">
+          <button id="btnTrue" class="btn-vf btn-verdadero" onclick="evaluarRespuesta(true)">Verdadero</button>
+          <button id="btnFalse" class="btn-vf btn-falso" onclick="evaluarRespuesta(false)">Falso</button>
+        </div>
+
+        <!-- Explicación formativa -->
+        <div id="feedbackBox" class="feedback-panel"></div>
+      </div>
+
+      <!-- Botón visible para pasar al siguiente tiro de dado -->
+      <button id="btnNext" class="next-step-btn" onclick="siguienteReactivo()">
+        🎲 Tirar el dado para la siguiente pregunta ➔
       </button>
+    </div>
 
-      <!-- Tarjeta del reactivo con opciones de respuesta -->
-      <div id="question-card" class="question-card hidden">
-        <span class="question-category" id="item-topic">Eje Temático</span>
-        <p class="question-statement" id="item-statement">Cargando reactivo...</p>
-
-        <div class="options-grid" id="options-panel">
-          <button class="btn-opt btn-opt-v" onclick="responderReactivo(true)">
-            <span>✓ Verdadero</span>
-          </button>
-          <button class="btn-opt btn-opt-f" onclick="responderReactivo(false)">
-            <span>✕ Falso</span>
-          </button>
-        </div>
-
-        <!-- Retroalimentación pedagógica -->
-        <div id="feedback-panel" class="feedback-box hidden"></div>
-
-        <!-- BOTÓN GRANDE Y CLARO: SIGUIENTE PREGUNTA -->
-        <button id="btn-next-question" class="btn-next-action hidden" onclick="avanzarSiguientePaso()">
-          <span id="btn-next-text">🎲 Tire el dado para la siguiente pregunta ➔</span>
-        </button>
+    <!-- PANTALLA 3: REPORTE FINAL Y CERTIFICADO -->
+    <div id="screen-report" class="card hidden">
+      <div style="text-align: center; margin-bottom: 12px;">
+        <span class="institution-pill">Evaluación Concluida</span>
+        <h2 style="font-family:'Cormorant Garamond',serif; color:var(--primary-dark); font-size:26px; margin-top:8px;">
+          ¡Excelente trabajo, colega!
+        </h2>
+        <p style="font-size:13px; color:var(--text-soft);">
+          Aquí tienes tu comprobante oficial para enviárselo a la facilitadora por WhatsApp.
+        </p>
       </div>
-    </section>
 
-    <!-- VISTA 4: COMPROBANTE OFICIAL (EXPORTABLE A JPG) -->
-    <section id="view-results" class="hidden">
-      <div id="printable-certificate" class="certificate-card">
-        <div class="cert-seal">⚜</div>
-        <div class="cert-heading">Constancia de Evaluación Diagnóstica</div>
-        <div class="cert-subhead">Secuencias Didácticas: Aprendizaje y Evaluación de Competencias</div>
-        <div class="cert-grant">Se hace constar que el/la colega docente:</div>
-        <div class="cert-name" id="cert-participant-name">Nombre del Docente</div>
-        <div style="font-size: 12px; color: #6b7280; margin-bottom: 14px;">ha culminado satisfactoriamente la valoración formativa de 10 reactivos socioformativos.</div>
-
-        <div class="cert-score-grid">
-          <div class="cert-score-box">
-            <span class="cert-score-label">Reactivos</span>
-            <span class="cert-score-val" id="cert-stat-reactivos">10 / 10</span>
-          </div>
-          <div class="cert-score-box">
-            <span class="cert-score-label">Aciertos</span>
-            <span class="cert-score-val" id="cert-stat-hits">0</span>
-          </div>
-          <div class="cert-score-box">
-            <span class="cert-score-label">Calificación</span>
-            <span class="cert-score-val" id="cert-stat-grade">0 / 100</span>
-          </div>
+      <!-- Certificado que se convertirá en JPG -->
+      <div id="certificateCapture" class="certificate-card">
+        <img class="cert-logo logo-img-target" alt="CEPIES UMSA" src="logo-cepies.jpg">
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-soft);">
+          CEPIES - Universidad Mayor de San Andrés
+        </div>
+        <div class="cert-title">Constancia de Valoración Didáctica</div>
+        <div style="font-size:12px; color:var(--text-soft);">
+          Secuencias Didácticas: Aprendizaje y Evaluación de Competencias
         </div>
 
-        <div class="cert-level-badge" id="cert-level-badge">Nivel de Dominio: --</div>
-
-        <div class="cert-feedback">
-          <strong>Dictamen y Retroalimentación Pedagógica:</strong><br>
-          <span id="cert-feedback-text">Retroalimentación pedagógica detallada...</span>
+        <div style="margin: 10px 0;">
+          <div style="font-size:12px; color:var(--text-soft);">Otorgado a la/el colega:</div>
+          <div id="certColegaNombre" class="cert-name">Nombre del Colega</div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #6b7280; margin-bottom: 12px; padding: 0 4px;">
-          <span><strong>Fecha:</strong> <span id="cert-date">--</span></span>
-          <span><strong>Registro ID:</strong> <span id="cert-code">SOC-0000</span></span>
+        <div class="score-circle">
+          <span id="certNota" class="score-number">100</span>
+          <span class="score-label">Puntos / 100</span>
         </div>
 
-        <div class="cert-citation">
-          Basado en la obra de Tobón Tobón, S., Pimienta Prieto, J. H., & García Fraile, J. A. (2010).<br>
-          <em>Secuencias didácticas: aprendizaje y evaluación de competencias</em>. Pearson Educación / CIFE.
+        <div style="font-size:13px; font-weight:600; color:var(--primary-dark); margin:6px 0;">
+          Aciertos: <span id="certAciertos">10</span> de 10 reactivos
+        </div>
+
+        <div id="certFeedback" class="cert-feedback">
+          Comentario pedagógico socioformativo.
+        </div>
+
+        <div style="font-size:10px; color:#888; margin-top:14px; border-top:1px solid #f1f1f1; padding-top:8px;">
+          Emitido en La Paz, Bolivia • <span id="certFecha"></span>
         </div>
       </div>
 
-      <div class="gap-vertical">
-        <button id="btn-download-jpg" class="btn-main" onclick="descargarCertificadoJPG()">
-          <span>Descargar Comprobante Oficial (JPG)</span>
+      <!-- Acciones: Descargar y Compartir -->
+      <div class="actions-grid">
+        <button class="btn-main btn-download" onclick="descargarCertificadoJPG()">
+          📥 Descargar en JPG
         </button>
-
-        <button class="btn-main btn-whatsapp" onclick="compartirPorWhatsApp()">
-          <span>Enviar Comprobante por WhatsApp</span>
+        <button class="btn-main btn-whatsapp" onclick="compartirWhatsApp()">
+          📲 Enviar por WhatsApp
         </button>
-
-        <div style="margin-top: 10px; font-size: 12px; color: #6b7280;">
-          Comprobante apto para guardar en galería o enviar al grupo docente.
-        </div>
       </div>
-    </section>
-  </main>
+    </div>
 
-  <!-- Botón flotante para acceso administrativo -->
-  <button class="admin-trigger-btn" onclick="abrirModalAdmin()" title="Acceso exclusivo para administración">
-    <span>🔒 Modo Admin</span>
-  </button>
+    <!-- PANTALLA 4: BLOQUEO (INTENTO YA UTILIZADO) -->
+    <div id="screen-locked" class="card hidden" style="text-align: center;">
+      <div style="font-size: 50px; margin-bottom: 10px;">🔒</div>
+      <h2 style="font-family:'Cormorant Garamond',serif; color:var(--primary-dark); font-size:26px;">
+        Evaluación ya completada
+      </h2>
+      <p style="font-size:14px; color:var(--text-soft); margin: 12px 0 20px;">
+        Estimada/o colega, esta evaluación permite un único intento para garantizar la autenticidad diagnóstica. Si necesitas revisar tu reporte anterior, haz clic abajo:
+      </p>
+      <button class="btn-main" onclick="verMiReporteAnterior()" style="margin-bottom: 12px;">
+        Ver mi comprobante previo
+      </button>
+      <button class="btn-main" style="background:#6c757d;" onclick="abrirModalAdmin()">
+        Acceso Administradora (Clave)
+      </button>
+    </div>
 
-  <!-- Modal de clave de administrador -->
-  <div id="admin-modal" class="admin-modal-overlay hidden">
-    <div class="admin-modal">
-      <div style="font-size: 32px; color: var(--rose-800); margin-bottom: 8px;">🔐</div>
-      <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 22px; color: var(--rose-900); margin-bottom: 6px;">Consola de Administración</h3>
-      <p style="font-size: 12.5px; color: #6b7280; margin-bottom: 16px;">Ingrese la clave administrativa para restablecer la evaluación y permitir un nuevo intento.</p>
+  </div>
 
-      <div class="input-field-group" style="margin-top: 0;">
-        <input type="password" id="admin-password-input" class="input-text" placeholder="Contraseña de Administrador" />
-      </div>
-
-      <div id="admin-error-msg" style="color: #dc2626; font-size: 12px; font-weight: 600; margin-bottom: 14px; min-height: 18px;"></div>
-
-      <div class="gap-vertical">
-        <button class="btn-main" onclick="verificarClaveAdmin()">
-          <span>Acceder y Desbloquear Evaluación</span>
-        </button>
-        <button class="btn-main btn-secondary" onclick="cerrarModalAdmin()">
-          <span>Cancelar</span>
-        </button>
+  <!-- MODAL DE ADMINISTRADORA -->
+  <div id="modalAdmin" class="modal-overlay">
+    <div class="modal-box">
+      <h3 style="color:var(--primary-dark); margin-bottom:8px;">Modo Administradora</h3>
+      <p style="font-size:12px; color:var(--text-soft); margin-bottom:15px;">
+        Ingresa tu contraseña para habilitar un nuevo intento:
+      </p>
+      <input type="password" id="adminPasswordInput" class="input-text" placeholder="Contraseña..." style="margin-bottom:15px; text-align:center;" />
+      <div style="display:flex; gap:10px;">
+        <button class="btn-main" onclick="validarClaveAdmin()" style="flex:1; padding:10px;">Desbloquear</button>
+        <button class="btn-main" onclick="cerrarModalAdmin()" style="flex:1; padding:10px; background:#aaa;">Cancelar</button>
       </div>
     </div>
   </div>
 
   <script>
-    /* BANCO DE EXACTAMENTE 10 REACTIVOS DEL MODELO DE COMPETENCIAS Y SOCIOFORMATIVO */
-    const bancoDiezReactivos = [
+    // Logo SVG por respaldo (Árbol de CEPIES)
+    const LOGO_SVG_BACKUP = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><circle cx="150" cy="150" r="146" fill="%23fdfdfd" stroke="%23c59b27" stroke-width="4"/><g fill="none" stroke="%23133b5c" stroke-width="8" stroke-linecap="round"><circle cx="150" cy="150" r="120" stroke-width="6"/><path d="M150 240 Q150 170 150 120 M150 160 Q100 130 70 80 M150 160 Q200 130 230 80 M150 130 Q120 100 100 50 M150 130 Q180 100 200 50"/><circle cx="150" cy="80" r="30"/><circle cx="95" cy="100" r="22"/><circle cx="205" cy="100" r="22"/></g><rect x="35" y="115" width="230" height="70" rx="14" fill="%23ffffff" fill-opacity="0.95" stroke="%23c59b27" stroke-width="2"/><text x="150" y="165" font-family="Montserrat,Arial,sans-serif" font-weight="900" font-size="52" text-anchor="middle" letter-spacing="1"><tspan fill="%23133b5c">cep</tspan><tspan fill="%23e11d48">i</tspan><tspan fill="%23133b5c">es</tspan></text></svg>`;
+
+    // Asegurar que si no encuentra logo-cepies.jpg use el vector nativo
+    document.querySelectorAll('.logo-img-target').forEach(img => {
+      img.onerror = () => { img.src = LOGO_SVG_BACKUP; };
+    });
+
+    // Crear las columnas laterales de CEPIES
+    function initSideColumns() {
+      const left = document.getElementById("sideLeft");
+      const right = document.getElementById("sideRight");
+      left.innerHTML = "";
+      right.innerHTML = "";
+      for (let i = 0; i < 5; i++) {
+        const itemL = document.createElement("div");
+        itemL.className = "side-logo-item";
+        itemL.style.animationDelay = (i * 0.7) + "s";
+        itemL.innerHTML = `<img class="logo-img-target" src="logo-cepies.jpg" onerror="this.src='${LOGO_SVG_BACKUP}'" alt="CEPIES">`;
+        left.appendChild(itemL);
+
+        const itemR = document.createElement("div");
+        itemR.className = "side-logo-item";
+        itemR.style.animationDelay = (i * 0.7 + 0.35) + "s";
+        itemR.innerHTML = `<img class="logo-img-target" src="logo-cepies.jpg" onerror="this.src='${LOGO_SVG_BACKUP}'" alt="CEPIES">`;
+        right.appendChild(itemR);
+      }
+    }
+    initSideColumns();
+
+    // 10 Preguntas oficiales de Sergio Tobón, Julio Pimienta y Juan Antonio García Fraile
+    const preguntas = [
       {
-        id: 1,
-        cara: 1,
-        eje: "Enfoque Socioformativo",
-        afirmacion: "El modelo de competencias busca formar competencias y no solamente enseñar contenidos.",
-        respuesta: true,
-        fundamento: "Conforme a Tobón et al., el modelo trasciende la enseñanza memorística de contenidos, promoviendo la articulación integral de saberes hacia el saber hacer y saber ser."
+        t: "El modelo de competencias busca formar competencias y no solamente enseñar contenidos.",
+        r: true,
+        f: "¡Correcto! Tobón y colaboradores señalan que el modelo trasciende la transmisión pasiva para movilizar saberes ante situaciones reales."
       },
       {
-        id: 2,
-        cara: 2,
-        eje: "Estructura de las Competencias",
-        afirmacion: "Las competencias se centran exclusivamente en el saber conocer.",
-        respuesta: false,
-        fundamento: "Las competencias son desempeños integrales y holísticos que articulan sinérgicamente el saber ser, saber convivir, saber hacer y saber conocer."
+        t: "Las competencias se centran exclusivamente en el saber conocer.",
+        r: false,
+        f: "¡Así es, falso! Articulan de forma integral el saber ser, saber convivir, saber hacer y saber conocer."
       },
       {
-        id: 3,
-        cara: 3,
-        eje: "Pertinencia Contextual",
-        afirmacion: "El modelo de competencias busca afrontar problemas pertinentes del contexto.",
-        respuesta: true,
-        fundamento: "La socioformación postula que la adquisición de competencias adquiere pleno sentido al resolver problemas y desafíos reales del entorno."
+        t: "El modelo de competencias busca afrontar problemas pertinentes del contexto.",
+        r: true,
+        f: "¡Muy bien! La pertinencia social y la resolución de problemas reales constituyen el corazón de la socioformación."
       },
       {
-        id: 4,
-        cara: 4,
-        eje: "Mediación Pedagógica",
-        afirmacion: "El docente debe ser únicamente transmisor de contenidos.",
-        respuesta: false,
-        fundamento: "En el enfoque socioformativo el profesor ejerce un rol mediador del aprendizaje, facilitador cognitivo y diseñador de ambientes didácticos formativos."
+        t: "El docente debe ser únicamente un transmisor de contenidos.",
+        r: false,
+        f: "¡Falso, totalmente! El educador actúa como mediador, tutor pedagógico y dinamizador de procesos formativos."
       },
       {
-        id: 5,
-        cara: 5,
-        eje: "Paradigma Curricular",
-        afirmacion: "El modelo de competencias propone pasar de la lógica de los contenidos a la lógica de la acción.",
-        respuesta: true,
-        fundamento: "Se transita de una estructura curricular meramente enciclopedista a un marco centrado en el desempeño idóneo y la actuación reflexiva."
+        t: "El modelo de competencias propone pasar de la lógica de los contenidos a la lógica de la acción.",
+        r: true,
+        f: "¡Exacto! El eje rector no es acumular temas, sino aplicar el conocimiento con sentido ético e idoneidad."
       },
       {
-        id: 6,
-        cara: 6,
-        eje: "Criterios de Idoneidad",
-        afirmacion: "La calidad es uno de los principios comunes del modelo de competencias.",
-        respuesta: true,
-        fundamento: "La idoneidad ética y el aseguramiento continuo de la calidad son pilares esenciales en la obra de Tobón, Pimienta Prieto y García Fraile."
+        t: "La calidad es uno de los principios comunes del modelo de competencias.",
+        r: true,
+        f: "¡Correcto! La calidad entendida como idoneidad y búsqueda de la mejora continua es un pilar fundamental."
       },
       {
-        id: 7,
-        cara: 1,
-        eje: "Epistemología Pedagógica",
-        afirmacion: "Las competencias son solamente conocimientos que deben memorizarse.",
-        respuesta: false,
-        fundamento: "Las competencias no son conceptos estáticos acumulados; implican repertorios dinámicos de actuación integral en situaciones concretas."
+        t: "Las competencias son solamente conocimientos teóricos que deben memorizarse.",
+        r: false,
+        f: "¡Efectivamente, falso! Las competencias son actuaciones complejas y contextualizadas, no simple memorización mecánica."
       },
       {
-        id: 8,
-        cara: 2,
-        eje: "Gestión del Cambio",
-        afirmacion: "El cambio educativo se genera mediante la reflexión y formación de docentes y directivos.",
-        respuesta: true,
-        fundamento: "La transformación curricular profunda exige la formación continua, el trabajo colaborativo y la práctica reflexiva de directivos y docentes."
+        t: "El cambio educativo se genera mediante la reflexión y formación de docentes y directivos.",
+        r: true,
+        f: "¡Correcto! Tobón resalta que la transformación curricular requiere metacognición docente y liderazgo pedagógico."
       },
       {
-        id: 9,
-        cara: 3,
-        eje: "Proyecto Ético de Vida",
-        afirmacion: "El enfoque socioformativo busca la formación integral de las personas.",
-        respuesta: true,
-        fundamento: "El fin teleológico esencial es el desarrollo armónico del ser humano, consolidando su proyecto ético de vida y compromiso solidario con la sociedad."
+        t: "Los contenidos deben aprenderse siempre por separado antes de aplicarlos a los problemas.",
+        r: false,
+        f: "¡Falso! En las secuencias didácticas los saberes se integran y articulan de modo interdisciplinario al resolver el reto."
       },
       {
-        id: 10,
-        cara: 4,
-        eje: "Evaluación Auténtica",
-        afirmacion: "La evaluación forma parte de las secuencias didácticas por competencias.",
-        respuesta: true,
-        fundamento: "La evaluación es formativa y procesual; acompaña cada fase de la secuencia didáctica para valorar evidencias de desempeño mediante matrices e instrumentos."
+        t: "El enfoque socioformativo propuesto por Tobón busca la formación integral de las personas.",
+        r: true,
+        f: "¡Correcto! Persigue un proyecto ético de vida, equilibrio ecológico, compromiso comunitario y desarrollo humano."
       }
     ];
 
-    const orientaciones3D = {
-      1: { x: 0, y: 0, z: 0 },
-      2: { x: 0, y: 180, z: 0 },
-      3: { x: 0, y: 90, z: 0 },
-      4: { x: 0, y: -90, z: 0 },
-      5: { x: -90, y: 0, z: 0 },
-      6: { x: 90, y: 0, z: 0 }
+    // Variables de Estado
+    let nombreColega = "";
+    let indiceActual = 0;
+    let aciertos = 0;
+    let tiempoRestante = 30;
+    let timerId = null;
+
+    // Coordenadas tridimensionales exactas para cada cara del dado (1 al 6)
+    const rotacionesDado = {
+      1: { x: 0, y: 0 },
+      2: { x: 0, y: -90 },
+      3: { x: 0, y: -180 },
+      4: { x: 0, y: 90 },
+      5: { x: -90, y: 0 },
+      6: { x: 90, y: 0 }
     };
 
-    const TOTAL_PREGUNTAS = 10;
-    const TIEMPO_LIMITE_SEGUNDOS = 30;
-    const CLAVE_ADMIN = "123*";
-    const STORAGE_KEY_REGISTRO = "eval_competencias_10p_registro_v2";
-
-    let nombreParticipante = "";
-    let esModoAdmin = false;
-    let aciertos = 0;
-    let reactivosContestados = 0;
-    let reactivoActual = null;
-    let bolsaReactivos = [];
-    let audioCtx = null;
-
-    /* Control del Temporizador */
-    let timerInterval = null;
-    let segundosRestantes = TIEMPO_LIMITE_SEGUNDOS;
-
-    /* Elementos del DOM */
-    const viewRegistration = document.getElementById("view-registration");
-    const viewBlocked = document.getElementById("view-blocked");
-    const viewEvaluation = document.getElementById("view-evaluation");
-    const viewResults = document.getElementById("view-results");
-
-    const inputName = document.getElementById("participant-name");
-    const cubeEl = document.getElementById("cube");
-    const shadowEl = document.getElementById("dice-shadow");
-    const btnRollEl = document.getElementById("btn-roll");
-    const questionCard = document.getElementById("question-card");
-    const itemTopic = document.getElementById("item-topic");
-    const itemStatement = document.getElementById("item-statement");
-    const feedbackPanel = document.getElementById("feedback-panel");
-    const btnNextQuestion = document.getElementById("btn-next-question");
-    const btnNextText = document.getElementById("btn-next-text");
-
-    const timerBox = document.getElementById("timer-box");
-    const timerText = document.getElementById("timer-text");
-    const timerBar = document.getElementById("timer-bar");
-
-    const evalStudentName = document.getElementById("eval-student-name");
-    const evalHits = document.getElementById("eval-hits");
-    const evalProgress = document.getElementById("eval-progress");
-
-    const adminModal = document.getElementById("admin-modal");
-    const adminPasswordInput = document.getElementById("admin-password-input");
-    const adminErrorMsg = document.getElementById("admin-error-msg");
-
-    function getAudioContext() {
-      if (!audioCtx) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (AudioContext) audioCtx = new AudioContext();
+    // Verificar si ya completó su intento único al entrar
+    window.addEventListener("DOMContentLoaded", () => {
+      const intentoGuardado = localStorage.getItem("cepies_eval_realizada");
+      if (intentoGuardado === "true") {
+        mostrarPantalla("screen-locked");
       }
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      return audioCtx;
-    }
+    });
 
-    function emitirSonido(frecuencias, duracion = 0.35, tipo = 'sine') {
-      try {
-        const ctx = getAudioContext();
-        if (!ctx) return;
-        const ahora = ctx.currentTime;
-        frecuencias.forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = tipo;
-          osc.frequency.setValueAtTime(freq, ahora + (idx * 0.04));
-          gain.gain.setValueAtTime(0.03, ahora + (idx * 0.04));
-          gain.gain.exponentialRampToValueAtTime(0.001, ahora + duracion);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(ahora + (idx * 0.04));
-          osc.stop(ahora + duracion);
-        });
-      } catch (e) {}
-    }
-
-    function sonarRodaje() { emitirSonido([240, 360, 480], 0.2, 'triangle'); }
-    function sonarAcierto() { emitirSonido([523.25, 659.25, 783.99, 1046.5], 0.45, 'sine'); }
-    function sonarFallo() { emitirSonido([311.13, 233.08], 0.35, 'sawtooth'); }
-    function sonarAlertaTiempo() { emitirSonido([700, 500], 0.2, 'square'); }
-
-    function comprobarEstadoPrevio() {
-      const registro = localStorage.getItem(STORAGE_KEY_REGISTRO);
-      if (registro) {
-        try {
-          const data = JSON.parse(registro);
-          if (data && data.completado && !esModoAdmin) {
-            document.getElementById("blocked-name").textContent = data.nombre || "Colega Docente";
-            mostrarVista(viewBlocked);
-            return;
-          }
-        } catch (e) {
-          localStorage.removeItem(STORAGE_KEY_REGISTRO);
-        }
-      }
-      mostrarVista(viewRegistration);
-    }
-
-    function mostrarVista(vista) {
-      [viewRegistration, viewBlocked, viewEvaluation, viewResults].forEach(v => v.classList.add("hidden"));
-      vista.classList.remove("hidden");
-    }
-
-    function iniciarEvaluacionDocente() {
-      const nombreIngresado = inputName.value.trim();
-      if (!nombreIngresado) {
-        inputName.focus();
-        inputName.style.borderColor = "#dc2626";
-        setTimeout(() => inputName.style.borderColor = "var(--rose-300)", 2000);
+    function iniciarEvaluacion() {
+      const input = document.getElementById("inputColega");
+      const valor = input.value.trim();
+      if (!valor) {
+        alert("Por favor, ingresa tu nombre y apellido para comenzar.");
+        input.focus();
         return;
       }
-
-      nombreParticipante = nombreIngresado;
-      evalStudentName.textContent = nombreParticipante;
-
-      // Barajar exactamente los 10 reactivos
-      bolsaReactivos = [...bancoDiezReactivos].sort(() => Math.random() - 0.5);
+      nombreColega = valor;
+      document.getElementById("lblColega").textContent = nombreColega;
+      indiceActual = 0;
       aciertos = 0;
-      reactivosContestados = 0;
-      actualizarContadores();
 
-      cubeEl.style.transform = "rotateX(0deg) rotateY(0deg) rotateZ(0deg)";
-      questionCard.classList.add("hidden");
-      btnNextQuestion.classList.add("hidden");
-      btnRollEl.classList.remove("hidden");
-      btnRollEl.disabled = false;
-      btnRollEl.innerHTML = "<span>🎲 Lanzar Dado para Iniciar Reactivo 1</span>";
-
-      mostrarVista(viewEvaluation);
+      mostrarPantalla("screen-game");
+      cargarReactivo();
     }
 
-    function lanzarDadoDocente() {
-      getAudioContext();
-      sonarRodaje();
+    function cargarReactivo() {
+      // Actualizar encabezados y progreso
+      document.getElementById("currIdx").textContent = (indiceActual + 1);
+      const porcentaje = ((indiceActual + 1) / 10) * 100;
+      document.getElementById("progressBar").style.width = porcentaje + "%";
 
-      detenerTemporizador();
-      btnRollEl.disabled = true;
-      btnRollEl.classList.add("hidden");
-      questionCard.classList.add("hidden");
-      feedbackPanel.classList.add("hidden");
-      btnNextQuestion.classList.add("hidden");
+      // Ocultar feedback y botón siguiente
+      const feedback = document.getElementById("feedbackBox");
+      feedback.className = "feedback-panel";
+      feedback.style.display = "none";
+      feedback.textContent = "";
 
-      cubeEl.classList.add("rolling");
-      shadowEl.style.transform = "scale(0.65)";
-      shadowEl.style.opacity = "0.2";
+      const btnNext = document.getElementById("btnNext");
+      btnNext.style.display = "none";
 
-      const caraSorteada = Math.floor(Math.random() * 6) + 1;
+      // Habilitar botones V / F
+      const bTrue = document.getElementById("btnTrue");
+      const bFalse = document.getElementById("btnFalse");
+      bTrue.disabled = false;
+      bFalse.disabled = false;
 
-      // Tomar el siguiente reactivo disponible
-      let idxEncontrado = bolsaReactivos.findIndex(r => r.cara === caraSorteada);
-      if (idxEncontrado === -1) idxEncontrado = 0;
-      reactivoActual = bolsaReactivos.splice(idxEncontrado, 1)[0];
+      // Asignar pregunta actual
+      const preg = preguntas[indiceActual];
+      document.getElementById("questionText").textContent = preg.t;
 
-      setTimeout(() => {
-        cubeEl.classList.remove("rolling");
-        shadowEl.style.transform = "scale(1)";
-        shadowEl.style.opacity = "0.28";
+      // Tirar el dado 3D de forma vistosa
+      animarTiroDado();
 
-        const coord = orientaciones3D[caraSorteada];
-        const vueltasX = 720 * (Math.random() > 0.5 ? 1 : 2);
-        const vueltasY = 720 * (Math.random() > 0.5 ? 1 : 2);
-
-        cubeEl.style.transform = `rotateX(${coord.x + vueltasX}deg) rotateY(${coord.y + vueltasY}deg) rotateZ(${coord.z}deg)`;
-
-        setTimeout(() => {
-          itemTopic.textContent = `Cara ${caraSorteada} • ${reactivoActual.eje}`;
-          itemStatement.textContent = `«${reactivoActual.afirmacion}»`;
-          questionCard.classList.remove("hidden");
-          habilitarBotonesOpcion(true);
-          iniciarTemporizador();
-        }, 400);
-
-      }, 1250);
+      // Iniciar cuenta regresiva de 30 segundos
+      iniciarTemporizador();
     }
 
-    /* GESTIÓN DEL TEMPORIZADOR DE 30 SEGUNDOS */
+    function animarTiroDado() {
+      const cube = document.getElementById("diceCube");
+      const caraAleatoria = Math.floor(Math.random() * 6) + 1;
+      const rotBase = rotacionesDado[caraAleatoria];
+
+      // Giros completos (3 vueltas extra en cada eje para efecto realista)
+      const extraGiroX = 360 * 2;
+      const extraGiroY = 360 * 3;
+
+      cube.style.transform = `rotateX(${rotBase.x + extraGiroX}deg) rotateY(${rotBase.y + extraGiroY}deg)`;
+      document.getElementById("diceResultLabel").textContent = `Cara del Dado: 🎲 ${caraAleatoria}`;
+    }
+
     function iniciarTemporizador() {
-      detenerTemporizador();
-      segundosRestantes = TIEMPO_LIMITE_SEGUNDOS;
-      actualizarGraficoTemporizador();
+      clearInterval(timerId);
+      tiempoRestante = 30;
+      actualizarVisualTimer();
 
-      timerInterval = setInterval(() => {
-        segundosRestantes--;
-        actualizarGraficoTemporizador();
+      timerId = setInterval(() => {
+        tiempoRestante--;
+        actualizarVisualTimer();
 
-        if (segundosRestantes <= 0) {
-          detenerTemporizador();
-          manejarTiempoAgotado();
+        if (tiempoRestante <= 0) {
+          clearInterval(timerId);
+          tiempoAgotado();
         }
       }, 1000);
     }
 
-    function detenerTemporizador() {
-      if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-      }
-    }
+    function actualizarVisualTimer() {
+      const badge = document.getElementById("timerBadge");
+      const txt = document.getElementById("timerTxt");
+      txt.textContent = tiempoRestante + "s";
 
-    function actualizarGraficoTemporizador() {
-      timerText.textContent = `⏱ ${segundosRestantes}s`;
-      const porcentaje = (segundosRestantes / TIEMPO_LIMITE_SEGUNDOS) * 100;
-      timerBar.style.width = `${porcentaje}%`;
-
-      if (segundosRestantes <= 5) {
-        timerText.classList.add("critical");
+      if (tiempoRestante <= 7) {
+        badge.classList.add("timer-danger");
       } else {
-        timerText.classList.remove("critical");
+        badge.classList.remove("timer-danger");
       }
     }
 
-    function manejarTiempoAgotado() {
-      sonarAlertaTiempo();
-      habilitarBotonesOpcion(false);
-      reactivosContestados++;
+    function tiempoAgotado() {
+      // Bloquear botones
+      document.getElementById("btnTrue").disabled = true;
+      document.getElementById("btnFalse").disabled = true;
 
-      const respuestaTexto = reactivoActual.respuesta ? "VERDADERO" : "FALSO";
-      feedbackPanel.className = "feedback-box timeout";
-      feedbackPanel.innerHTML = `
-        <div class="feedback-title">⏰ Tiempo agotado (30s) • Reactivo no respondido</div>
-        <div class="feedback-body">
-          La respuesta correcta es <strong>${respuestaTexto}</strong>.<br>
-          <em>${reactivoActual.fundamento}</em>
-        </div>
-      `;
-      feedbackPanel.classList.remove("hidden");
-      actualizarContadores();
-      mostrarBotonSiguienteAccion();
+      const preg = preguntas[indiceActual];
+      const feedback = document.getElementById("feedbackBox");
+      feedback.className = "feedback-panel incorrect";
+      feedback.style.display = "block";
+      feedback.innerHTML = `<strong>⏰ ¡Tiempo agotado (30s)!</strong><br>La respuesta correcta era: <strong>${preg.r ? 'Verdadero' : 'Falso'}</strong>.<br>${preg.f}`;
+
+      mostrarBotonSiguiente();
     }
 
-    function responderReactivo(eleccionDocente) {
-      detenerTemporizador();
-      habilitarBotonesOpcion(false);
-      reactivosContestados++;
+    function evaluarRespuesta(eleccion) {
+      clearInterval(timerId);
 
-      const esCorrecta = (eleccionDocente === reactivoActual.respuesta);
+      document.getElementById("btnTrue").disabled = true;
+      document.getElementById("btnFalse").disabled = true;
 
-      if (esCorrecta) {
+      const preg = preguntas[indiceActual];
+      const feedback = document.getElementById("feedbackBox");
+      feedback.style.display = "block";
+
+      if (eleccion === preg.r) {
         aciertos++;
-        sonarAcierto();
-        feedbackPanel.className = "feedback-box correct";
-        feedbackPanel.innerHTML = `
-          <div class="feedback-title">✓ Respuesta Correcta</div>
-          <div class="feedback-body">${reactivoActual.fundamento}</div>
-        `;
-        confetti({
-          particleCount: 30,
-          spread: 45,
-          origin: { y: 0.7 },
-          colors: ['#c59b27', '#be185d', '#f472b6', '#ffffff']
-        });
+        feedback.className = "feedback-panel correct";
+        feedback.innerHTML = `<strong>✨ ¡Respuesta Correcta!</strong><br>${preg.f}`;
       } else {
-        sonarFallo();
-        const textoSolucion = reactivoActual.respuesta ? "VERDADERO" : "FALSO";
-        feedbackPanel.className = "feedback-box incorrect";
-        feedbackPanel.innerHTML = `
-          <div class="feedback-title">✕ Observación Pedagógica (Respuesta correcta: ${textoSolucion})</div>
-          <div class="feedback-body">${reactivoActual.fundamento}</div>
-        `;
+        feedback.className = "feedback-panel incorrect";
+        feedback.innerHTML = `<strong>❌ Respuesta Incorrecta.</strong><br>Era <strong>${preg.r ? 'Verdadero' : 'Falso'}</strong>.<br>${preg.f}`;
       }
 
-      feedbackPanel.classList.remove("hidden");
-      actualizarContadores();
-      mostrarBotonSiguienteAccion();
+      mostrarBotonSiguiente();
     }
 
-    /* MUESTRA EL BOTÓN CLARO PARA TIRAR EL DADO EN LA SIGUIENTE PREGUNTA */
-    function mostrarBotonSiguienteAccion() {
-      btnNextQuestion.classList.remove("hidden");
-      if (reactivosContestados >= TOTAL_PREGUNTAS) {
-        btnNextText.textContent = "🏆 Ver Resultados Finales y Comprobante ➔";
+    function mostrarBotonSiguiente() {
+      const btnNext = document.getElementById("btnNext");
+      btnNext.style.display = "block";
+      if (indiceActual < 9) {
+        btnNext.innerHTML = `🎲 Tire el dado para la siguiente pregunta (${indiceActual + 2} de 10) ➔`;
       } else {
-        const siguienteNum = reactivosContestados + 1;
-        btnNextText.textContent = `🎲 Tire el dado para la siguiente pregunta (${siguienteNum} de ${TOTAL_PREGUNTAS}) ➔`;
+        btnNext.innerHTML = `🏆 Ver Resultados Finales y Comprobante ➔`;
       }
     }
 
-    function avanzarSiguientePaso() {
-      if (reactivosContestados >= TOTAL_PREGUNTAS) {
+    function siguienteReactivo() {
+      if (indiceActual < 9) {
+        indiceActual++;
+        cargarReactivo();
+      } else {
         finalizarEvaluacion();
-      } else {
-        lanzarDadoDocente();
       }
-    }
-
-    function habilitarBotonesOpcion(activar) {
-      const botones = document.querySelectorAll("#options-panel button");
-      botones.forEach(b => b.disabled = !activar);
-    }
-
-    function actualizarContadores() {
-      evalHits.textContent = aciertos;
-      evalProgress.textContent = `${reactivosContestados} / ${TOTAL_PREGUNTAS}`;
     }
 
     function finalizarEvaluacion() {
-      detenerTemporizador();
-      const calificacionBase100 = Math.round((aciertos / TOTAL_PREGUNTAS) * 100);
-      const fechaActual = new Date();
-      const fechaTexto = fechaActual.toLocaleDateString("es-ES", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric"
-      }) + " " + fechaActual.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+      // Calcular puntaje sobre 100
+      const notaFinal = aciertos * 10;
+      const fechaHoy = new Date().toLocaleDateString("es-BO", {
+        year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute:'2-digit'
+      });
 
-      const codigoCertificado = "SOC-" + Math.floor(100000 + Math.random() * 900000);
-
-      let nivel = "";
-      let retroalimentacion = "";
-
-      if (calificacionBase100 >= 90) {
-        nivel = "Nivel Estratégico (Excelente Dominio Socioformativo)";
-        retroalimentacion = "Demuestra un dominio conceptual y metodológico sobresaliente sobre las secuencias didácticas y el enfoque socioformativo. Articula con solvencia la lógica de la acción, la movilización de recursos y la evaluación formativa contextualizada.";
-      } else if (calificacionBase100 >= 70) {
-        nivel = "Nivel Autónomo (Buen Dominio Pedagógico)";
-        retroalimentacion = "Comprende con claridad los fundamentos de las competencias y su mediación didáctica. Se sugiere continuar afianzando la formulación de secuencias articuladas hacia problemas contextuales.";
-      } else if (calificacionBase100 >= 50) {
-        nivel = "Nivel Resolutivo (Dominio Básico en Desarrollo)";
-        retroalimentacion = "Identifica los rasgos generales del modelo por competencias. Es oportuno superar la memorización tradicional y profundizar en la integración de saberes.";
+      let dictamen = "";
+      if (notaFinal >= 90) {
+        dictamen = "¡Felicidades, colega! Demuestras un dominio estratégico integral sobre el diseño de secuencias didácticas y el enfoque socioformativo de Tobón, Pimienta y García Fraile.";
+      } else if (notaFinal >= 70) {
+        dictamen = "¡Muy buen desempeño! Cuentas con un nivel resolutivo autónomo sólido para implementar competencias en aula de acuerdo con los criterios del CEPIES UMSA.";
       } else {
-        nivel = "Nivel Receptivo (Acompañamiento Formativo Requerido)";
-        retroalimentacion = "Se recomienda el estudio reflexivo de la bibliografía de Tobón, Pimienta Prieto y García Fraile, haciendo énfasis en la diferenciación entre transmisión pasiva y formación integral.";
+        dictamen = "Buen avance formativo. Te recomendamos continuar profundizando en la articulación de saberes y la metacognición según el texto base de secuencias didácticas.";
       }
 
-      const datosResultado = {
-        nombre: nombreParticipante,
-        aciertos: aciertos,
-        total: TOTAL_PREGUNTAS,
-        calificacion: calificacionBase100,
-        nivel: nivel,
-        retroalimentacion: retroalimentacion,
-        fecha: fechaTexto,
-        codigo: codigoCertificado,
-        completado: true
-      };
+      // Guardar en localStorage para que sea de único intento
+      localStorage.setItem("cepies_eval_realizada", "true");
+      localStorage.setItem("cepies_colega_nombre", nombreColega);
+      localStorage.setItem("cepies_colega_nota", notaFinal);
+      localStorage.setItem("cepies_colega_aciertos", aciertos);
+      localStorage.setItem("cepies_colega_fecha", fechaHoy);
+      localStorage.setItem("cepies_colega_dictamen", dictamen);
 
-      if (!esModoAdmin) {
-        localStorage.setItem(STORAGE_KEY_REGISTRO, JSON.stringify(datosResultado));
-      }
-
-      desplegarCertificado(datosResultado);
-      mostrarVista(viewResults);
-
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#c59b27', '#be185d', '#ffffff']
-      });
+      // Desplegar reporte
+      armarReporteVisual(nombreColega, notaFinal, aciertos, fechaHoy, dictamen);
+      mostrarPantalla("screen-report");
     }
 
-    function desplegarCertificado(datos) {
-      document.getElementById("cert-participant-name").textContent = datos.nombre;
-      document.getElementById("cert-stat-hits").textContent = datos.aciertos;
-      document.getElementById("cert-stat-reactivos").textContent = `${datos.total} / ${TOTAL_PREGUNTAS}`;
-      document.getElementById("cert-stat-grade").textContent = `${datos.calificacion} / 100`;
-      document.getElementById("cert-level-badge").textContent = datos.nivel;
-      document.getElementById("cert-feedback-text").textContent = datos.retroalimentacion;
-      document.getElementById("cert-date").textContent = datos.fecha;
-      document.getElementById("cert-code").textContent = datos.codigo;
+    function armarReporteVisual(nom, nota, aci, fecha, dic) {
+      document.getElementById("certColegaNombre").textContent = nom;
+      document.getElementById("certNota").textContent = nota;
+      document.getElementById("certAciertos").textContent = aci;
+      document.getElementById("certFecha").textContent = fecha;
+      document.getElementById("certFeedback").textContent = dic;
     }
 
-    function mostrarCertificadoGuardado() {
-      const registro = localStorage.getItem(STORAGE_KEY_REGISTRO);
-      if (registro) {
-        try {
-          const datos = JSON.parse(registro);
-          desplegarCertificado(datos);
-          mostrarVista(viewResults);
-        } catch (e) {
-          mostrarVista(viewRegistration);
-        }
-      }
+    function verMiReporteAnterior() {
+      const nom = localStorage.getItem("cepies_colega_nombre") || "Colega";
+      const nota = localStorage.getItem("cepies_colega_nota") || "0";
+      const aci = localStorage.getItem("cepies_colega_aciertos") || "0";
+      const fecha = localStorage.getItem("cepies_colega_fecha") || "";
+      const dic = localStorage.getItem("cepies_colega_dictamen") || "";
+
+      armarReporteVisual(nom, nota, aci, fecha, dic);
+      mostrarPantalla("screen-report");
     }
 
+    // Descarga en formato JPG nítido
     function descargarCertificadoJPG() {
-      const certificadoEl = document.getElementById("printable-certificate");
-      const btnDescargar = document.getElementById("btn-download-jpg");
-      const textoOriginal = btnDescargar.innerHTML;
-
-      btnDescargar.disabled = true;
-      btnDescargar.innerHTML = "<span>Generando comprobante en alta resolución...</span>";
-
-      html2canvas(certificadoEl, {
+      const elemento = document.getElementById("certificateCapture");
+      html2canvas(elemento, {
         scale: 2.5,
-        useCORS: true,
         backgroundColor: "#ffffff",
-        logging: false
+        useCORS: true
       }).then(canvas => {
-        const link = document.createElement("a");
-        const nombreArchivo = (nombreParticipante || "Docente").replace(/\s+/g, "_");
-        link.download = `Comprobante_Evaluacion_Competencias_${nombreArchivo}.jpg`;
-        link.href = canvas.toDataURL("image/jpeg", 0.95);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        btnDescargar.disabled = false;
-        btnDescargar.innerHTML = textoOriginal;
-      }).catch(err => {
-        btnDescargar.disabled = false;
-        btnDescargar.innerHTML = textoOriginal;
+        const enlace = document.createElement("a");
+        enlace.download = `Certificado_CEPIES_${nombreColega.replace(/\s+/g, '_')}.jpg`;
+        enlace.href = canvas.toDataURL("image/jpeg", 0.95);
+        enlace.click();
       });
     }
 
-    function compartirPorWhatsApp() {
-      const nombre = document.getElementById("cert-participant-name").textContent;
-      const calif = document.getElementById("cert-stat-grade").textContent;
-      const aciertosStr = document.getElementById("cert-stat-hits").textContent;
-      const nivel = document.getElementById("cert-level-badge").textContent;
-      const codigo = document.getElementById("cert-code").textContent;
-
-      const mensaje = `Hola estimado/a colega. Le comparto mi comprobante de la Evaluación Formativa en *Secuencias Didácticas por Competencias*:\n\n` +
-        `👤 *Docente:* ${nombre}\n` +
-        `🎯 *Aciertos:* ${aciertosStr}/10\n` +
-        `📊 *Calificación:* ${calif}\n` +
-        `🏆 *${nivel}*\n` +
-        `🔖 *Código de Registro:* ${codigo}\n\n` +
-        `_Adjunto la imagen oficial en formato JPG descargada desde la plataforma._`;
-
-      const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensaje)}`;
-      window.open(urlWhatsApp, "_blank");
+    // Compartir por WhatsApp con texto redactado
+    function compartirWhatsApp() {
+      const nota = document.getElementById("certNota").textContent;
+      const texto = encodeURIComponent(
+        `¡Hola! Adjunto mi comprobante de la Evaluación de Secuencias Didácticas (CEPIES UMSA).\n\n` +
+        `👤 Colega: ${nombreColega}\n` +
+        `🎯 Calificación: ${nota}/100 puntos\n` +
+        `✅ Aciertos: ${aciertos}/10 reactivos\n\n` +
+        `¡Saludos cordiales!`
+      );
+      window.open(`https://api.whatsapp.com/send?text=${texto}`, "_blank");
     }
 
+    // Lógica del Administrador (Clave: 123*)
     function abrirModalAdmin() {
-      adminErrorMsg.textContent = "";
-      adminPasswordInput.value = "";
-      adminModal.classList.remove("hidden");
-      setTimeout(() => adminPasswordInput.focus(), 150);
+      document.getElementById("modalAdmin").style.display = "flex";
+      document.getElementById("adminPasswordInput").value = "";
+      document.getElementById("adminPasswordInput").focus();
     }
 
     function cerrarModalAdmin() {
-      adminModal.classList.add("hidden");
-      adminPasswordInput.value = "";
-      adminErrorMsg.textContent = "";
+      document.getElementById("modalAdmin").style.display = "none";
     }
 
-    function verificarClaveAdmin() {
-      const pass = adminPasswordInput.value.trim();
-      if (pass === CLAVE_ADMIN) {
-        esModoAdmin = true;
-        detenerTemporizador();
-        localStorage.removeItem(STORAGE_KEY_REGISTRO);
+    function validarClaveAdmin() {
+      const clave = document.getElementById("adminPasswordInput").value;
+      if (clave === "123*") {
+        localStorage.clear();
+        alert("¡Acceso concedido! Se ha desbloqueado la evaluación para un nuevo intento.");
         cerrarModalAdmin();
-
-        alert("Modo Administrador activado: El intento previo ha sido desbloqueado. Ya puede registrar un nuevo docente.");
-        inputName.value = "";
-        mostrarVista(viewRegistration);
+        mostrarPantalla("screen-welcome");
+        document.getElementById("inputColega").value = "";
       } else {
-        adminErrorMsg.textContent = "Contraseña incorrecta. Intente nuevamente.";
-        adminPasswordInput.value = "";
-        adminPasswordInput.focus();
+        alert("Contraseña incorrecta.");
       }
     }
 
-    function toggleAuthorsPanel() {
-      const body = document.getElementById("authors-body");
-      const arrow = document.getElementById("accordion-arrow");
-      if (body.classList.contains("active")) {
-        body.classList.remove("active");
-        arrow.textContent = "▾";
-      } else {
-        body.classList.add("active");
-        arrow.textContent = "▴";
-      }
+    function mostrarPantalla(idPantalla) {
+      document.getElementById("screen-welcome").classList.add("hidden");
+      document.getElementById("screen-game").classList.add("hidden");
+      document.getElementById("screen-report").classList.add("hidden");
+      document.getElementById("screen-locked").classList.add("hidden");
+      document.getElementById(idPantalla).classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    adminPasswordInput.addEventListener("keyup", (e) => {
-      if (e.key === "Enter") verificarClaveAdmin();
-    });
-
-    inputName.addEventListener("keyup", (e) => {
-      if (e.key === "Enter") iniciarEvaluacionDocente();
-    });
-
-    window.addEventListener("DOMContentLoaded", () => {
-      comprobarEstadoPrevio();
-    });
   </script>
 </body>
 </html>
