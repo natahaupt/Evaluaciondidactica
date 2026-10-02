@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evaluación Didáctica - CEPIES UMSA</title>
+  <title>Evaluación Didáctica - CEPIES - UMSA</title>
   
-  <!-- Tipografías formales y legibles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
@@ -16,7 +15,7 @@
   <style>
     :root {
       --bg-page: #fdf2f4;
-      --card-bg: rgba(255, 255, 255, 0.95);
+      --card-bg: rgba(255, 255, 255, 0.96);
       --primary-rose: #d84b7a;
       --primary-dark: #b12b58;
       --accent-gold: #c59b27;
@@ -26,7 +25,7 @@
       --true-color: #15803d;
       --false-color: #b91c1c;
       --border-soft: #f4c2d7;
-      --shadow-soft: 0 15px 35px rgba(216, 75, 122, 0.12);
+      --shadow-soft: 0 15px 35px rgba(216, 75, 122, 0.15);
     }
 
     * {
@@ -46,58 +45,46 @@
       overflow-x: hidden;
     }
 
-    /* ========================================================
-       MARCAS DE AGUA GIGANTES A LOS COSTADOS
-       ======================================================== */
+    /* Marcas de agua grandes en los costados */
     .watermark-side {
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      width: clamp(280px, 24vw, 420px);
-      height: clamp(280px, 24vw, 420px);
+      width: clamp(260px, 24vw, 420px);
+      height: clamp(260px, 24vw, 420px);
       pointer-events: none;
       z-index: 1;
-      opacity: 0.18; /* Efecto marca de agua suave */
-      filter: saturate(1.1);
+      opacity: 0.16;
       user-select: none;
     }
 
-    .watermark-left {
-      left: -40px;
-    }
-
-    .watermark-right {
-      right: -40px;
-    }
+    .watermark-left { left: -30px; }
+    .watermark-right { right: -30px; }
 
     .watermark-side img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 50%;
     }
 
-    /* En pantallas móviles se atenúa un poco más para que no distraiga */
     @media (max-width: 768px) {
       .watermark-side {
-        width: 220px;
-        height: 220px;
+        width: 190px;
+        height: 190px;
         opacity: 0.10;
       }
-      .watermark-left { left: -70px; }
-      .watermark-right { right: -70px; }
+      .watermark-left { left: -60px; }
+      .watermark-right { right: -60px; }
     }
 
-    /* Contenedor central de la app */
     .main-wrapper {
       width: 100%;
-      max-width: 720px;
-      padding: 30px 16px 60px;
+      max-width: 680px;
+      padding: 24px 16px 60px;
       position: relative;
-      z-index: 2; /* Sobre las marcas de agua */
+      z-index: 2;
     }
 
-    /* Botón flotante para la administradora */
     .admin-float-btn {
       position: fixed;
       bottom: 15px;
@@ -115,45 +102,32 @@
       z-index: 99;
       transition: all 0.2s;
     }
-    .admin-float-btn:hover {
-      background: #fff;
-      transform: translateY(-2px);
-    }
 
-    /* Tarjetas principales */
     .card {
       background: var(--card-bg);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: 24px;
       box-shadow: var(--shadow-soft);
-      padding: 32px 28px;
+      padding: 30px 24px;
       margin-bottom: 24px;
-      position: relative;
+      transition: all 0.3s ease;
     }
 
-    /* Encabezado */
     .header-box {
       text-align: center;
-      margin-bottom: 24px;
-    }
-
-    .header-logo-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
     }
 
     .header-logo-img {
-      width: 75px;
-      height: 75px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       box-shadow: 0 4px 12px rgba(216, 75, 122, 0.2);
       border: 2px solid var(--accent-gold);
       background: #fff;
       object-fit: contain;
+      margin-bottom: 10px;
     }
 
     .institution-pill {
@@ -175,22 +149,21 @@
       font-weight: 700;
       color: var(--primary-dark);
       line-height: 1.25;
-      margin: 12px 0 6px;
+      margin: 10px 0 6px;
     }
 
     .authors-note {
       font-size: 12px;
       color: var(--text-soft);
       line-height: 1.5;
-      margin-top: 6px;
-      padding: 8px 12px;
+      margin-top: 8px;
+      padding: 10px 14px;
       background: rgba(255, 255, 255, 0.7);
-      border-radius: 10px;
+      border-radius: 12px;
       border-left: 3px solid var(--primary-rose);
       text-align: left;
     }
 
-    /* Pantalla 1: Registro del Colega */
     .input-group {
       margin: 20px 0;
       text-align: left;
@@ -228,24 +201,22 @@
       padding: 15px 22px;
       border-radius: 14px;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(216, 75, 122, 0.3);
       transition: all 0.2s;
     }
 
-    .btn-main:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(216, 75, 122, 0.4);
+    .btn-main:active {
+      transform: scale(0.98);
     }
 
-    /* Pantalla 2: Interfaz con Dado 3D */
     .status-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 14px;
-      margin-bottom: 16px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
       border-bottom: 1px solid var(--border-soft);
       font-size: 13px;
       font-weight: 600;
@@ -255,9 +226,9 @@
     .timer-wrap {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: #fff;
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 20px;
       border: 1px solid var(--border-soft);
       font-weight: 700;
@@ -267,12 +238,12 @@
     .timer-danger {
       color: var(--false-color) !important;
       border-color: var(--false-color) !important;
-      animation: pulseAlert 1s infinite alternate;
+      animation: pulseAlert 0.8s infinite alternate;
     }
 
     @keyframes pulseAlert {
       from { transform: scale(1); }
-      to { transform: scale(1.05); }
+      to { transform: scale(1.08); }
     }
 
     .progress-bar-bg {
@@ -281,7 +252,7 @@
       background: #fce4ec;
       border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .progress-bar-fill {
@@ -290,14 +261,18 @@
       transition: width 0.3s;
     }
 
-    /* Escenario Dado 3D */
+    /* Zona del Dado */
+    .dice-action-zone {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
     .dice-stage {
-      height: 120px;
+      height: 110px;
       display: flex;
       justify-content: center;
       align-items: center;
       perspective: 800px;
-      margin: 10px 0 20px;
     }
 
     .cube-dice {
@@ -353,15 +328,64 @@
 
     .f6 { transform: rotateX(-90deg) translateZ(32.5px); grid-template-columns: 1fr 1fr; }
 
-    /* Caja de pregunta */
+    .btn-roll-dice {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(225, 29, 72, 0.35);
+      margin-top: 10px;
+      transition: all 0.2s;
+    }
+
+    .btn-roll-dice:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(225, 29, 72, 0.45);
+    }
+
+    /* Caja de Pregunta */
     .question-box {
       background: #ffffff;
       border: 1px solid var(--border-soft);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 22px;
-      margin: 16px 0;
+      margin: 10px 0;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(216, 75, 122, 0.06);
+      box-shadow: 0 4px 15px rgba(216, 75, 122, 0.08);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .slide-in-question {
+      animation: slideInAnim 0.45s ease-out forwards;
+    }
+
+    @keyframes slideInAnim {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .shake-box {
+      animation: shakeAnim 0.5s ease-in-out;
+    }
+
+    @keyframes shakeAnim {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    .bounce-box {
+      animation: bounceSuccess 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes bounceSuccess {
+      0% { transform: scale(0.96); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
     }
 
     .question-badge {
@@ -414,7 +438,6 @@
     .btn-vf:disabled {
       opacity: 0.55;
       cursor: not-allowed;
-      transform: none !important;
     }
 
     .feedback-panel {
@@ -425,6 +448,12 @@
       text-align: left;
       line-height: 1.4;
       display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .feedback-panel.correct {
@@ -450,19 +479,19 @@
       border-radius: 14px;
       font-size: 16px;
       font-weight: 700;
-      margin-top: 18px;
+      margin-top: 16px;
       cursor: pointer;
       display: none;
       box-shadow: 0 8px 20px rgba(197, 155, 39, 0.35);
-      animation: bounceNext 1.5s infinite alternate;
+      animation: pulseBtn 1.5s infinite alternate;
     }
 
-    @keyframes bounceNext {
+    @keyframes pulseBtn {
       0% { transform: translateY(0); }
       100% { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(197, 155, 39, 0.5); }
     }
 
-    /* Certificado / Comprobante Oficial */
+    /* Pantalla Final: Tarjeta descargable */
     .certificate-card {
       background: #ffffff;
       border: 3px double var(--accent-gold);
@@ -471,14 +500,14 @@
       text-align: center;
       position: relative;
       box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-      margin: 15px 0 25px;
+      margin: 15px 0 22px;
     }
 
     .cert-logo {
-      width: 85px;
-      height: 85px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      margin: 0 auto 10px;
+      margin: 0 auto 8px;
       display: block;
       border: 2px solid var(--accent-gold);
       object-fit: contain;
@@ -497,9 +526,9 @@
       font-style: italic;
       font-size: 22px;
       color: var(--accent-gold);
-      margin: 12px 0;
+      margin: 10px 0;
       border-bottom: 1px dashed var(--border-soft);
-      padding-bottom: 6px;
+      padding-bottom: 5px;
       display: inline-block;
     }
 
@@ -550,7 +579,7 @@
     .btn-download { background: var(--primary-rose); color: white; }
     .btn-whatsapp { background: #25d366; color: white; }
 
-    /* Modal Administradora */
+    /* Modal Admin */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -570,7 +599,6 @@
       width: 100%;
       max-width: 340px;
       text-align: center;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
     }
 
     .hidden { display: none !important; }
@@ -580,13 +608,12 @@
 
   <!-- MARCAS DE AGUA GIGANTES A LOS COSTADOS -->
   <div class="watermark-side watermark-left">
-    <img class="logo-img-target" src="logo-cepies.jpg" alt="CEPIES UMSA">
+    <img class="logo-img-target" src="logo-cepies.jpg" alt="CEPIES - UMSA">
   </div>
   <div class="watermark-side watermark-right">
-    <img class="logo-img-target" src="logo-cepies.jpg" alt="CEPIES UMSA">
+    <img class="logo-img-target" src="logo-cepies.jpg" alt="CEPIES - UMSA">
   </div>
 
-  <!-- Botón Administradora -->
   <button class="admin-float-btn" onclick="abrirModalAdmin()">🔒 Modo Admin</button>
 
   <div class="main-wrapper">
@@ -594,10 +621,8 @@
     <!-- PANTALLA 1: INGRESO -->
     <div id="screen-welcome" class="card">
       <div class="header-box">
-        <div class="header-logo-row">
-          <img class="header-logo-img logo-img-target" alt="CEPIES UMSA" src="logo-cepies.jpg">
-        </div>
-        <span class="institution-pill">CEPIES • UMSA La Paz</span>
+        <img class="header-logo-img logo-img-target" alt="CEPIES - UMSA" src="logo-cepies.jpg">
+        <div><span class="institution-pill">CEPIES - UMSA</span></div>
         <h1>Evaluación Didáctica por Competencias</h1>
         <div class="authors-note">
           Basado en el libro: <em>"Secuencias Didácticas: Aprendizaje y Evaluación de Competencias"</em><br>
@@ -606,18 +631,18 @@
       </div>
 
       <p style="font-size: 14px; color: var(--text-soft); text-align: center; margin-bottom: 15px;">
-        ¡Hola, colega! Esta es una actividad didáctica de 10 preguntas. Tirarás el dado para cada reactivo y dispondrás de 30 segundos para contestar Verdadero o Falso.
+        ¡Hola, colega! Esta es una actividad didáctica de 10 preguntas. En cada una tirarás el dado y tendrás 30 segundos para responder Verdadero o Falso. Al finalizar, descarga tu imagen JPG y envíala por WhatsApp.
       </p>
 
       <div class="input-group">
         <label for="inputColega">¿Cuál es tu nombre, colega?</label>
-        <input type="text" id="inputColega" class="input-text" placeholder="Escribe tu nombre y apellido aquí..." autofocus />
+        <input type="text" id="inputColega" class="input-text" placeholder="Escribe tu nombre y apellido..." autofocus />
       </div>
 
       <button class="btn-main" onclick="iniciarEvaluacion()">Comenzar mi Evaluación ➔</button>
     </div>
 
-    <!-- PANTALLA 2: JUEGO CON DADO 3D -->
+    <!-- PANTALLA 2: JUEGO -->
     <div id="screen-game" class="card hidden">
       <div class="status-bar">
         <div>Colega: <span id="lblColega" style="font-weight:700;"></span></div>
@@ -631,58 +656,59 @@
         <div id="progressBar" class="progress-bar-fill" style="width: 10%;"></div>
       </div>
 
-      <!-- Dado 3D -->
-      <div class="dice-stage">
-        <div id="diceCube" class="cube-dice">
-          <div class="cube-face f1"><span class="pip"></span></div>
-          <div class="cube-face f2"><span class="pip"></span><span class="pip"></span></div>
-          <div class="cube-face f3"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
-          <div class="cube-face f4"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
-          <div class="cube-face f5"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
-          <div class="cube-face f6">
-            <span class="pip"></span><span class="pip"></span><span class="pip"></span>
-            <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+      <!-- Zona del Dado 3D con botón interactivo -->
+      <div class="dice-action-zone">
+        <div class="dice-stage">
+          <div id="diceCube" class="cube-dice">
+            <div class="cube-face f1"><span class="pip"></span></div>
+            <div class="cube-face f2"><span class="pip"></span><span class="pip"></span></div>
+            <div class="cube-face f3"><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            <div class="cube-face f4"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            <div class="cube-face f5"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span></div>
+            <div class="cube-face f6">
+              <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+              <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+            </div>
           </div>
         </div>
+        <button id="btnTirarDadoManual" class="btn-roll-dice" onclick="tirarDadoManual()">🎲 ¡Tirar el dado!</button>
       </div>
 
-      <!-- Pregunta -->
-      <div class="question-box">
-        <div id="diceResultLabel" class="question-badge">Cara del Dado: 🎲</div>
-        <p id="questionText" class="question-statement">Cargando reactivo didáctico...</p>
+      <!-- Caja de Pregunta -->
+      <div id="questionContainer" class="question-box">
+        <div id="diceResultLabel" class="question-badge">Primero tira el dado 🎲</div>
+        <p id="questionText" class="question-statement">Presiona el botón de arriba para tirar el dado y ver tu reactivo...</p>
 
-        <!-- Botones V / F -->
         <div class="vf-grid">
-          <button id="btnTrue" class="btn-vf btn-verdadero" onclick="evaluarRespuesta(true)">Verdadero</button>
-          <button id="btnFalse" class="btn-vf btn-falso" onclick="evaluarRespuesta(false)">Falso</button>
+          <button id="btnTrue" class="btn-vf btn-verdadero" onclick="evaluarRespuesta(true)" disabled>Verdadero</button>
+          <button id="btnFalse" class="btn-vf btn-falso" onclick="evaluarRespuesta(false)" disabled>Falso</button>
         </div>
 
         <div id="feedbackBox" class="feedback-panel"></div>
       </div>
 
-      <!-- Botón siguiente -->
       <button id="btnNext" class="next-step-btn" onclick="siguienteReactivo()">
-        🎲 Tirar el dado para la siguiente pregunta ➔
+        🎲 Siguiente pregunta ➔
       </button>
     </div>
 
-    <!-- PANTALLA 3: REPORTE FINAL -->
+    <!-- PANTALLA 3: RESULTADOS (SIN PALABRA COMPROBANTE) -->
     <div id="screen-report" class="card hidden">
       <div style="text-align: center; margin-bottom: 12px;">
         <span class="institution-pill">Evaluación Concluida</span>
-        <h2 style="font-family:'Cormorant Garamond',serif; color:var(--primary-dark); font-size:26px; margin-top:8px;">
-          ¡Excelente trabajo, colega!
+        <h2 id="finalGreetingTitle" style="font-family:'Cormorant Garamond',serif; color:var(--primary-dark); font-size:26px; margin-top:8px;">
+          Resultado de tu Evaluación
         </h2>
         <p style="font-size:13px; color:var(--text-soft);">
-          Aquí tienes tu comprobante oficial para enviárselo a la facilitadora por WhatsApp.
+          Descarga tu resultado en formato JPG y envíalo por WhatsApp a la facilitadora.
         </p>
       </div>
 
-      <!-- Certificado descargable -->
+      <!-- Tarjeta para capturar en JPG -->
       <div id="certificateCapture" class="certificate-card">
-        <img class="cert-logo logo-img-target" alt="CEPIES UMSA" src="logo-cepies.jpg">
+        <img class="cert-logo logo-img-target" alt="CEPIES - UMSA" src="logo-cepies.jpg">
         <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-soft);">
-          CEPIES - Universidad Mayor de San Andrés
+          CEPIES - UMSA
         </div>
         <div class="cert-title">Constancia de Valoración Didáctica</div>
         <div style="font-size:12px; color:var(--text-soft);">
@@ -695,12 +721,12 @@
         </div>
 
         <div class="score-circle">
-          <span id="certNota" class="score-number">100</span>
+          <span id="certNota" class="score-number">0</span>
           <span class="score-label">Puntos / 100</span>
         </div>
 
         <div style="font-size:13px; font-weight:600; color:var(--primary-dark); margin:6px 0;">
-          Aciertos: <span id="certAciertos">10</span> de 10 reactivos
+          Aciertos: <span id="certAciertos">0</span> de 10 reactivos
         </div>
 
         <div id="certFeedback" class="cert-feedback">
@@ -713,26 +739,26 @@
       </div>
 
       <div class="actions-grid">
-        <button class="btn-main btn-download" onclick="descargarCertificadoJPG()">
+        <button class="btn-main btn-download" onclick="descargarResultadoJPG()">
           📥 Descargar en JPG
         </button>
         <button class="btn-main btn-whatsapp" onclick="compartirWhatsApp()">
-          📲 Enviar por WhatsApp
+          📲 Enviar JPG por WhatsApp
         </button>
       </div>
     </div>
 
-    <!-- PANTALLA 4: BLOQUEO (INTENTO YA UTILIZADO) -->
+    <!-- PANTALLA 4: BLOQUEO (INTENTO YA USADO) -->
     <div id="screen-locked" class="card hidden" style="text-align: center;">
       <div style="font-size: 50px; margin-bottom: 10px;">🔒</div>
       <h2 style="font-family:'Cormorant Garamond',serif; color:var(--primary-dark); font-size:26px;">
         Evaluación ya completada
       </h2>
       <p style="font-size:14px; color:var(--text-soft); margin: 12px 0 20px;">
-        Estimada/o colega, esta evaluación permite un único intento para garantizar la autenticidad diagnóstica.
+        Estimada/o colega, esta evaluación ya fue respondida en este dispositivo.
       </p>
       <button class="btn-main" onclick="verMiReporteAnterior()" style="margin-bottom: 12px;">
-        Ver mi comprobante previo
+        Ver mi resultado anterior
       </button>
       <button class="btn-main" style="background:#6c757d;" onclick="abrirModalAdmin()">
         Acceso Administradora (Clave)
@@ -757,14 +783,12 @@
   </div>
 
   <script>
-    // Respaldo visual automático si no se halla el archivo logo-cepies.jpg
     const LOGO_SVG_BACKUP = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><circle cx="150" cy="150" r="146" fill="%23ffffff" stroke="%23c59b27" stroke-width="4"/><g fill="none" stroke="%23133b5c" stroke-width="8" stroke-linecap="round"><circle cx="150" cy="150" r="120" stroke-width="6"/><path d="M150 240 Q150 170 150 120 M150 160 Q100 130 70 80 M150 160 Q200 130 230 80 M150 130 Q120 100 100 50 M150 130 Q180 100 200 50"/><circle cx="150" cy="80" r="30"/><circle cx="95" cy="100" r="22"/><circle cx="205" cy="100" r="22"/></g><rect x="35" y="115" width="230" height="70" rx="14" fill="%23ffffff" fill-opacity="0.95" stroke="%23c59b27" stroke-width="2"/><text x="150" y="165" font-family="Montserrat,Arial,sans-serif" font-weight="900" font-size="52" text-anchor="middle"><tspan fill="%23133b5c">cep</tspan><tspan fill="%23e11d48">i</tspan><tspan fill="%23133b5c">es</tspan></text></svg>`;
 
     document.querySelectorAll('.logo-img-target').forEach(img => {
       img.onerror = () => { img.src = LOGO_SVG_BACKUP; };
     });
 
-    // 10 Preguntas oficiales (Tobón, Pimienta y García Fraile)
     const preguntas = [
       {
         t: "El modelo de competencias busca formar competencias y no solamente enseñar contenidos.",
@@ -823,6 +847,7 @@
     let aciertos = 0;
     let tiempoRestante = 30;
     let timerId = null;
+    let dadoTirado = false;
 
     const rotacionesDado = {
       1: { x: 0, y: 0 },
@@ -854,10 +879,15 @@
       aciertos = 0;
 
       mostrarPantalla("screen-game");
-      cargarReactivo();
+      prepararPregunta();
     }
 
-    function cargarReactivo() {
+    function prepararPregunta() {
+      dadoTirado = false;
+      clearInterval(timerId);
+      tiempoRestante = 30;
+      actualizarVisualTimer();
+
       document.getElementById("currIdx").textContent = (indiceActual + 1);
       const porcentaje = ((indiceActual + 1) / 10) * 100;
       document.getElementById("progressBar").style.width = porcentaje + "%";
@@ -870,28 +900,51 @@
       const btnNext = document.getElementById("btnNext");
       btnNext.style.display = "none";
 
-      const bTrue = document.getElementById("btnTrue");
-      const bFalse = document.getElementById("btnFalse");
-      bTrue.disabled = false;
-      bFalse.disabled = false;
+      document.getElementById("btnTrue").disabled = true;
+      document.getElementById("btnFalse").disabled = true;
 
-      const preg = preguntas[indiceActual];
-      document.getElementById("questionText").textContent = preg.t;
+      // Habilitar botón para que tire el dado
+      const btnDado = document.getElementById("btnTirarDadoManual");
+      btnDado.disabled = false;
+      btnDado.style.display = "inline-block";
+      btnDado.innerHTML = `🎲 ¡Tirar el dado para la pregunta ${indiceActual + 1}!`;
 
-      animarTiroDado();
-      iniciarTemporizador();
+      document.getElementById("diceResultLabel").textContent = "Primero tira el dado 🎲";
+      document.getElementById("questionText").textContent = "Presiona el botón de arriba para lanzar el dado...";
+
+      // Animación suave de cambio de tarjeta
+      const box = document.getElementById("questionContainer");
+      box.classList.remove("slide-in-question", "shake-box", "bounce-box");
+      void box.offsetWidth;
+      box.classList.add("slide-in-question");
     }
 
-    function animarTiroDado() {
+    function tirarDadoManual() {
+      if (dadoTirado) return;
+      dadoTirado = true;
+
+      const btnDado = document.getElementById("btnTirarDadoManual");
+      btnDado.disabled = true;
+
       const cube = document.getElementById("diceCube");
-      const caraAleatoria = Math.floor(Math.random() * 6) + 1;
-      const rotBase = rotacionesDado[caraAleatoria];
+      const cara = Math.floor(Math.random() * 6) + 1;
+      const rot = rotacionesDado[cara];
 
-      const extraGiroX = 360 * 2;
-      const extraGiroY = 360 * 3;
+      const extraX = 360 * 3;
+      const extraY = 360 * 2;
+      cube.style.transform = `rotateX(${rot.x + extraX}deg) rotateY(${rot.y + extraY}deg)`;
 
-      cube.style.transform = `rotateX(${rotBase.x + extraGiroX}deg) rotateY(${rotBase.y + extraGiroY}deg)`;
-      document.getElementById("diceResultLabel").textContent = `Cara del Dado: 🎲 ${caraAleatoria}`;
+      setTimeout(() => {
+        document.getElementById("diceResultLabel").textContent = `Cara del Dado: 🎲 ${cara}`;
+        const preg = preguntas[indiceActual];
+        document.getElementById("questionText").textContent = preg.t;
+
+        document.getElementById("btnTrue").disabled = false;
+        document.getElementById("btnFalse").disabled = false;
+        btnDado.style.display = "none";
+
+        iniciarTemporizador();
+      }, 1100);
     }
 
     function iniciarTemporizador() {
@@ -926,11 +979,16 @@
       document.getElementById("btnTrue").disabled = true;
       document.getElementById("btnFalse").disabled = true;
 
+      const box = document.getElementById("questionContainer");
+      box.classList.remove("shake-box", "bounce-box");
+      void box.offsetWidth;
+      box.classList.add("shake-box");
+
       const preg = preguntas[indiceActual];
       const feedback = document.getElementById("feedbackBox");
       feedback.className = "feedback-panel incorrect";
       feedback.style.display = "block";
-      feedback.innerHTML = `<strong>⏰ ¡Tiempo agotado (30s)!</strong><br>La respuesta correcta era: <strong>${preg.r ? 'Verdadero' : 'Falso'}</strong>.<br>${preg.f}`;
+      feedback.innerHTML = `<strong>⏰ ¡Se acabó el tiempo (30s)!</strong><br>La respuesta correcta era: <strong>${preg.r ? 'Verdadero' : 'Falso'}</strong>.<br>${preg.f}`;
 
       mostrarBotonSiguiente();
     }
@@ -945,13 +1003,19 @@
       const feedback = document.getElementById("feedbackBox");
       feedback.style.display = "block";
 
+      const box = document.getElementById("questionContainer");
+      box.classList.remove("shake-box", "bounce-box");
+      void box.offsetWidth;
+
       if (eleccion === preg.r) {
         aciertos++;
+        box.classList.add("bounce-box");
         feedback.className = "feedback-panel correct";
-        feedback.innerHTML = `<strong>✨ ¡Respuesta Correcta!</strong><br>${preg.f}`;
+        feedback.innerHTML = `<strong>✨ ¡Bien respondido!</strong><br>${preg.f}`;
       } else {
+        box.classList.add("shake-box");
         feedback.className = "feedback-panel incorrect";
-        feedback.innerHTML = `<strong>❌ Respuesta Incorrecta.</strong><br>Era <strong>${preg.r ? 'Verdadero' : 'Falso'}</strong>.<br>${preg.f}`;
+        feedback.innerHTML = `<strong>❌ No acertaste esta vez.</strong><br>La respuesta correcta era <strong>${preg.r ? 'Verdadero' : 'Falso'}</strong>.<br>${preg.f}`;
       }
 
       mostrarBotonSiguiente();
@@ -961,16 +1025,16 @@
       const btnNext = document.getElementById("btnNext");
       btnNext.style.display = "block";
       if (indiceActual < 9) {
-        btnNext.innerHTML = `🎲 Tire el dado para la siguiente pregunta (${indiceActual + 2} de 10) ➔`;
+        btnNext.innerHTML = `🎲 Siguiente pregunta (${indiceActual + 2} de 10) ➔`;
       } else {
-        btnNext.innerHTML = `🏆 Ver Resultados Finales y Comprobante ➔`;
+        btnNext.innerHTML = `🏆 Ver mi calificación final ➔`;
       }
     }
 
     function siguienteReactivo() {
       if (indiceActual < 9) {
         indiceActual++;
-        cargarReactivo();
+        prepararPregunta();
       } else {
         finalizarEvaluacion();
       }
@@ -982,13 +1046,22 @@
         year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute:'2-digit'
       });
 
+      // Título y retroalimentación coherentes con la nota obtenida
+      let tituloFinal = "";
       let dictamen = "";
+
       if (notaFinal >= 90) {
-        dictamen = "¡Felicidades, colega! Demuestras un dominio estratégico integral sobre el diseño de secuencias didácticas y el enfoque socioformativo de Tobón, Pimienta y García Fraile.";
+        tituloFinal = "¡Excelente desempeño, colega!";
+        dictamen = "¡Felicidades! Demuestras un dominio estratégico integral sobre el diseño de secuencias didácticas y el enfoque socioformativo de Tobón, Pimienta y García Fraile.";
       } else if (notaFinal >= 70) {
-        dictamen = "¡Muy buen desempeño! Cuentas con un nivel resolutivo autónomo sólido para implementar competencias en aula de acuerdo con los criterios del CEPIES UMSA.";
+        tituloFinal = "¡Buen trabajo, colega!";
+        dictamen = "Cuentas con un nivel resolutivo autónomo sólido para implementar competencias en aula de acuerdo con los criterios del CEPIES - UMSA.";
+      } else if (notaFinal >= 40) {
+        tituloFinal = "¡Buen intento, colega!";
+        dictamen = "Tienes nociones iniciales, pero se sugiere repasar con más detalle la lógica de la acción y la metacognición en las secuencias didácticas.";
       } else {
-        dictamen = "Buen avance formativo. Te recomendamos continuar profundizando en la articulación de saberes y la metacognición según el texto base de secuencias didácticas.";
+        tituloFinal = "¡Ánimo, colega! Hay que repasar";
+        dictamen = "Esta vez el resultado fue muy bajo. Te recomendamos leer con calma el texto base de secuencias didácticas por competencias del CEPIES - UMSA para reforzar los conceptos.";
       }
 
       localStorage.setItem("cepies_eval_realizada", "true");
@@ -997,12 +1070,14 @@
       localStorage.setItem("cepies_colega_aciertos", aciertos);
       localStorage.setItem("cepies_colega_fecha", fechaHoy);
       localStorage.setItem("cepies_colega_dictamen", dictamen);
+      localStorage.setItem("cepies_colega_titulo", tituloFinal);
 
-      armarReporteVisual(nombreColega, notaFinal, aciertos, fechaHoy, dictamen);
+      armarReporteVisual(nombreColega, notaFinal, aciertos, fechaHoy, dictamen, tituloFinal);
       mostrarPantalla("screen-report");
     }
 
-    function armarReporteVisual(nom, nota, aci, fecha, dic) {
+    function armarReporteVisual(nom, nota, aci, fecha, dic, tit) {
+      document.getElementById("finalGreetingTitle").textContent = tit || "Resultado de tu Evaluación";
       document.getElementById("certColegaNombre").textContent = nom;
       document.getElementById("certNota").textContent = nota;
       document.getElementById("certAciertos").textContent = aci;
@@ -1016,12 +1091,13 @@
       const aci = localStorage.getItem("cepies_colega_aciertos") || "0";
       const fecha = localStorage.getItem("cepies_colega_fecha") || "";
       const dic = localStorage.getItem("cepies_colega_dictamen") || "";
+      const tit = localStorage.getItem("cepies_colega_titulo") || "Resultado de tu Evaluación";
 
-      armarReporteVisual(nom, nota, aci, fecha, dic);
+      armarReporteVisual(nom, nota, aci, fecha, dic, tit);
       mostrarPantalla("screen-report");
     }
 
-    function descargarCertificadoJPG() {
+    function descargarResultadoJPG() {
       const elemento = document.getElementById("certificateCapture");
       html2canvas(elemento, {
         scale: 2.5,
@@ -1029,7 +1105,7 @@
         useCORS: true
       }).then(canvas => {
         const enlace = document.createElement("a");
-        enlace.download = `Certificado_CEPIES_${nombreColega.replace(/\s+/g, '_')}.jpg`;
+        enlace.download = `Resultado_CEPIES_${nombreColega.replace(/\s+/g, '_')}.jpg`;
         enlace.href = canvas.toDataURL("image/jpeg", 0.95);
         enlace.click();
       });
@@ -1038,7 +1114,7 @@
     function compartirWhatsApp() {
       const nota = document.getElementById("certNota").textContent;
       const texto = encodeURIComponent(
-        `¡Hola! Adjunto mi comprobante de la Evaluación de Secuencias Didácticas (CEPIES UMSA).\n\n` +
+        `¡Hola! Adjunto la imagen de mi resultado de la Evaluación de Secuencias Didácticas (CEPIES - UMSA).\n\n` +
         `👤 Colega: ${nombreColega}\n` +
         `🎯 Calificación: ${nota}/100 puntos\n` +
         `✅ Aciertos: ${aciertos}/10 reactivos\n\n` +
